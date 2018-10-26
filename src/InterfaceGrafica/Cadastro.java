@@ -5,6 +5,9 @@
  */
 package InterfaceGrafica;
 
+import ClassesUsuario.Administrador;
+import ClassesUsuario.Cliente;
+import ClassesUsuario.Profissional;
 import javax.swing.JOptionPane;
 
 /**
@@ -258,6 +261,16 @@ public class Cadastro extends javax.swing.JFrame {
                     JOptionPane.PLAIN_MESSAGE
                 );
            }
+       }
+       if(radioCliente.isSelected()){
+           Cliente c = new Cliente (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
+           c.criarUsuario("Cliente");
+       } else if(radioProf.isSelected()){
+           Profissional p = new Profissional (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
+           p.criarUsuario("Cliente");
+       } else if(radioAdmin.isSelected()){
+           Administrador a = new Administrador (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
+           a.criarUsuario("Cliente");
        }
     }//GEN-LAST:event_ButtonCadastroActionPerformed
 

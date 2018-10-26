@@ -5,15 +5,21 @@
  */
 package ClassesUsuario;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Loures
  */
 public  abstract class Usuario {
-    private String nome;
-    private String usuario;
-    private String email;
-    private String senha;
+    protected String nome;
+    protected String usuario;
+    protected String email;
+    protected String senha;
     
     public Usuario(String nome, String usuario, String email, String senha){
         this.nome = nome;
@@ -22,6 +28,52 @@ public  abstract class Usuario {
         this.senha = senha;
     }
     
-    public void criarUsuario(){}
+    public void criarUsuario(String tipo){
+        String path = "/src/Arquivos/Conta"+tipo+".txt";
+        File arquivo = new File(path);
+        if(!arquivo.exists()){
+            try {
+                arquivo.createNewFile();
+            } catch (IOException ex) {
+                JOptionPane.showConfirmDialog(null,
+                "Erro ao criar o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+            }
+        }
+        BufferedWriter buffWrite= null;
+        try {
+            buffWrite = new BufferedWriter(new FileWriter(arquivo, true));
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        try {
+            buffWrite.append("Nome: "+nome + "\nUsuario: "+usuario+"\nEmail: "+email +"\n"+"\nSenha: "+senha);
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao escrever o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        try {
+            buffWrite.close();
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao fechar o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
 }
 
