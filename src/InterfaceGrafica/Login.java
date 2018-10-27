@@ -211,7 +211,55 @@ public class Login extends javax.swing.JFrame {
                 );
             }
         } else {
-            this.dispose();
+            FileReader arq = null;
+            try {
+                arq = new FileReader("src\\Arquivos\\ContaAdministrador.txt");
+            } catch (FileNotFoundException ex) {
+                JOptionPane.showConfirmDialog(null,
+                    "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
+                    "Erro",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+            BufferedReader lerArq = new BufferedReader(arq);
+            String linha = null; 
+            try {
+                linha = lerArq.readLine();
+            } catch (IOException ex) {
+                JOptionPane.showConfirmDialog(null,
+                    "Erro ao ler o arquivo. mensagem"+"\n"+ex.getMessage(),
+                    "Erro",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+            while (linha != null) {
+                if(linha.contains("Usuario: ")){
+                    if(fieldUsuario.getText().equals(linha.split(": ")[1])){
+                        try {
+                            linha = lerArq.readLine();
+                        } catch (IOException ex) {
+                           JOptionPane.showConfirmDialog(null,
+                                "Erro ao ler o arquivo. mensagem"+"\n"+ex.getMessage(),
+                                "Erro",
+                                JOptionPane.DEFAULT_OPTION,
+                                JOptionPane.ERROR_MESSAGE
+                            );
+                        }
+                        if(linha.contains("Senha: ")){
+                            if(password.getText().equals(linha.split(": ")[1])){
+                                this.dispose();
+                            }
+                        }        
+                    }
+                }
+                try { 
+                    linha = lerArq.readLine();
+                } catch (IOException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }//GEN-LAST:event_ButtonEntrarActionPerformed
 

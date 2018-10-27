@@ -261,23 +261,22 @@ public class Cadastro extends javax.swing.JFrame {
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.PLAIN_MESSAGE
                 );
-           }
-       }
-       if(radioCliente.isSelected()|| tipo == 'c'){
-           Cliente c = new Cliente (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
-           c.criarUsuario("Cliente");
-           Login l = new Login('c', true);
-           this.setVisible(false);
-       } else if(radioProf.isSelected() || tipo == 'p'){
-           Profissional p = new Profissional (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
-           p.criarUsuario("Profissional");
-           Login l = new Login('p', true);
-           this.setVisible(false);
-       } else if(radioAdmin.isSelected() || tipo == 'a'){
-           Administrador a = new Administrador (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
-           a.criarUsuario("Admnistrador");
-           Login l = new Login('a', true);
-           this.setVisible(false);
+           } else if(radioCliente.isSelected()|| tipo == 'c'){
+                Cliente c = new Cliente (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
+                c.criarUsuario("Cliente");
+                Login l = new Login('c', true);
+                this.setVisible(false);
+            } else if(radioProf.isSelected() || tipo == 'p'){
+                Profissional p = new Profissional (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
+                p.criarUsuario("Profissional");
+                Login l = new Login('p', true);
+                this.setVisible(false);
+            } else if(radioAdmin.isSelected() || tipo == 'a'){
+                Administrador a = new Administrador (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
+                a.criarUsuario("Admnistrador");
+                Login l = new Login('a', true);
+                this.setVisible(false);
+            }
        }
     }//GEN-LAST:event_ButtonCadastroActionPerformed
 
