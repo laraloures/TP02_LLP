@@ -8,6 +8,7 @@ package InterfaceGrafica;
 import ClassesUsuario.Administrador;
 import ClassesUsuario.Cliente;
 import ClassesUsuario.Profissional;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,13 +17,14 @@ import javax.swing.JOptionPane;
  */
 public class Cadastro extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Cadastro
-     */
-    public Cadastro() {
+    private char tipo;
+    
+    public Cadastro(char tipo) {
+        this.tipo = tipo;
         initComponents();
         this.setLocationRelativeTo(this);
         radioCliente.setSelected(true);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -184,25 +186,18 @@ public class Cadastro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void radioAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAdminActionPerformed
-        JOptionPane.showConfirmDialog(null,
-            "Para criar uma conta de administrador, você deverá fazer o login como administrador",
-            "Conta Administrador",
-            JOptionPane.DEFAULT_OPTION,
-            JOptionPane.PLAIN_MESSAGE);
-        radioCliente.setSelected(true);
+        if(tipo != 'a'){
+            JOptionPane.showConfirmDialog(null,
+                "Para criar uma conta de administrador, você deverá fazer o login como administrador",
+                "Conta Administrador",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.PLAIN_MESSAGE);
+            radioCliente.setSelected(true);
+        }
         
     }//GEN-LAST:event_radioAdminActionPerformed
 
     private void ButtonCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCadastroActionPerformed
-       /* ;
-
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JRadioButton RadioAdmin;
-    private javax.swing.JRadioButton RadioCliente;
-    private javax.swing.JRadioButton RadioProf;
-        */
        if(jTextField1.getText().equals("")){
             JOptionPane.showConfirmDialog(null,
                 "*Nome Completo* é obrigatorio",
@@ -262,15 +257,21 @@ public class Cadastro extends javax.swing.JFrame {
                 );
            }
        }
-       if(radioCliente.isSelected()){
+       if(radioCliente.isSelected()|| tipo == 'c'){
            Cliente c = new Cliente (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
            c.criarUsuario("Cliente");
-       } else if(radioProf.isSelected()){
+           Login l = new Login('c');
+           this.setVisible(false);
+       } else if(radioProf.isSelected() || tipo == 'p'){
            Profissional p = new Profissional (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
-           p.criarUsuario("Cliente");
-       } else if(radioAdmin.isSelected()){
+           p.criarUsuario("Profissional");
+           Login l = new Login('p');
+           this.setVisible(false);
+       } else if(radioAdmin.isSelected() || tipo == 'a'){
            Administrador a = new Administrador (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
-           a.criarUsuario("Cliente");
+           a.criarUsuario("Admnistrador");
+           Login l = new Login('a');
+           this.setVisible(false);
        }
     }//GEN-LAST:event_ButtonCadastroActionPerformed
 

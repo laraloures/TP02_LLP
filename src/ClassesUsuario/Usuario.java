@@ -29,7 +29,7 @@ public  abstract class Usuario {
     }
     
     public void criarUsuario(String tipo){
-        String path = "/src/Arquivos/Conta"+tipo+".txt";
+        String path = "src\\Arquivos\\Conta"+tipo+".txt";
         File arquivo = new File(path);
         if(!arquivo.exists()){
             try {
@@ -55,7 +55,14 @@ public  abstract class Usuario {
             );
         }
         try {
-            buffWrite.append("Nome: "+nome + "\nUsuario: "+usuario+"\nEmail: "+email +"\n"+"\nSenha: "+senha);
+            buffWrite.write("Nome: "+nome);
+	    buffWrite.newLine();
+            buffWrite.write("Usuario: "+usuario);
+	    buffWrite.newLine();
+            buffWrite.write("Senha: "+senha);
+	    buffWrite.newLine();
+            buffWrite.write("Email: "+email); 
+	    buffWrite.newLine();
         } catch (IOException ex) {
             JOptionPane.showConfirmDialog(null,
                 "Erro ao escrever o arquivo. mensagem"+"\n"+ex.getMessage(),
