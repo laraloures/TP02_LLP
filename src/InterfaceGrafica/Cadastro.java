@@ -187,12 +187,18 @@ public class Cadastro extends javax.swing.JFrame {
 
     private void radioAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAdminActionPerformed
         if(tipo != 'a'){
-            JOptionPane.showConfirmDialog(null,
-                "Para criar uma conta de administrador, você deverá fazer o login como administrador",
-                "Conta Administrador",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.PLAIN_MESSAGE);
-            radioCliente.setSelected(true);
+            String[] options = new String[] {"Login", "Cancelar"};
+            int response = JOptionPane.showOptionDialog(null,
+                    "Para criar uma conta de administrador, você deverá fazer o login como administrador", 
+                    "Conta Administrador",
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,
+                null, options, options[0]);
+            if(response == 0){
+                Login l = new Login('n', false);
+                l.setVisible(true);
+            } else {
+                radioCliente.setSelected(true);
+            }
         }
         
     }//GEN-LAST:event_radioAdminActionPerformed
@@ -260,17 +266,17 @@ public class Cadastro extends javax.swing.JFrame {
        if(radioCliente.isSelected()|| tipo == 'c'){
            Cliente c = new Cliente (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
            c.criarUsuario("Cliente");
-           Login l = new Login('c');
+           Login l = new Login('c', true);
            this.setVisible(false);
        } else if(radioProf.isSelected() || tipo == 'p'){
            Profissional p = new Profissional (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
            p.criarUsuario("Profissional");
-           Login l = new Login('p');
+           Login l = new Login('p', true);
            this.setVisible(false);
        } else if(radioAdmin.isSelected() || tipo == 'a'){
            Administrador a = new Administrador (jTextField1.getText(),jTextField2.getText(),jTextField3.getText(),senha.getText());
            a.criarUsuario("Admnistrador");
-           Login l = new Login('a');
+           Login l = new Login('a', true);
            this.setVisible(false);
        }
     }//GEN-LAST:event_ButtonCadastroActionPerformed

@@ -20,8 +20,11 @@ import javax.swing.JOptionPane;
 public class Login extends javax.swing.JFrame {
 
     private char tipoLogin;
-    public Login(char tipoLogin) {
+    private boolean menu;
+    
+    public Login(char tipoLogin, boolean menu) {
         this.tipoLogin = tipoLogin;
+        this.menu = menu;
         initComponents();
         this.setLocationRelativeTo(this);
     }
@@ -135,77 +138,81 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEntrarActionPerformed
-        try {
-            FileReader arq;
-            arq = new FileReader("src\\Arquivos\\ContaCliente.txt");
-            BufferedReader lerArq = new BufferedReader(arq);
+        if(menu){
             try {
-                String linha;
-                linha = lerArq.readLine(); 
-                while (linha != null) {
-                    if(linha.contains("Usuario: ")){
-                        if(fieldUsuario.getText().equals(linha.split(": ")[1])){
-                            linha = lerArq.readLine();
-                            if(linha.contains("Senha: ")){
-                                if(password.getText().equals(linha.split(": ")[1])){
-                                    Menu m = new Menu('c');
-                                    m.setVisible(true);
-                                }
-                            }        
-                        }
-                    }
+                FileReader arq;
+                arq = new FileReader("src\\Arquivos\\ContaCliente.txt");
+                BufferedReader lerArq = new BufferedReader(arq);
+                try {
+                    String linha;
                     linha = lerArq.readLine(); 
-                }// lê a primeira linha
-                arq = new FileReader("src\\Arquivos\\ContaProfissional.txt");
-                lerArq = new BufferedReader(arq);
-                linha = lerArq.readLine(); 
-                while (linha != null) {
-                    if(linha.contains("Usuario: ")){
-                        if(fieldUsuario.getText().equals(linha.split(": ")[1])){
-                            linha = lerArq.readLine();
-                            if(linha.contains("Senha: ")){
-                                if(password.getText().equals(linha.split(": ")[1])){
-                                    Menu m = new Menu('p');
-                                    m.setVisible(true);
-                                }
-                            }        
+                    while (linha != null) {
+                        if(linha.contains("Usuario: ")){
+                            if(fieldUsuario.getText().equals(linha.split(": ")[1])){
+                                linha = lerArq.readLine();
+                                if(linha.contains("Senha: ")){
+                                    if(password.getText().equals(linha.split(": ")[1])){
+                                        Menu m = new Menu('c');
+                                        m.setVisible(true);
+                                    }
+                                }        
+                            }
                         }
-                    }
+                        linha = lerArq.readLine(); 
+                    }// lê a primeira linha
+                    arq = new FileReader("src\\Arquivos\\ContaProfissional.txt");
+                    lerArq = new BufferedReader(arq);
                     linha = lerArq.readLine(); 
+                    while (linha != null) {
+                        if(linha.contains("Usuario: ")){
+                            if(fieldUsuario.getText().equals(linha.split(": ")[1])){
+                                linha = lerArq.readLine();
+                                if(linha.contains("Senha: ")){
+                                    if(password.getText().equals(linha.split(": ")[1])){
+                                        Menu m = new Menu('p');
+                                        m.setVisible(true);
+                                    }
+                                }        
+                            }
+                        }
+                        linha = lerArq.readLine(); 
+                    }
+                    arq = new FileReader("src\\Arquivos\\ContaAdministrador.txt");
+                    lerArq = new BufferedReader(arq);
+                    linha = lerArq.readLine(); 
+                    while (linha != null) {
+                        if(linha.contains("Usuario: ")){
+                            if(fieldUsuario.getText().equals(linha.split(": ")[1])){
+                                linha = lerArq.readLine();
+                                if(linha.contains("Senha: ")){
+                                    if(password.getText().equals(linha.split(": ")[1])){
+                                        Menu m = new Menu('a');
+                                        m.setVisible(true);
+                                    }
+                                }        
+                            }
+                        }
+                        linha = lerArq.readLine(); 
+                    }
+                } catch (IOException ex) {
+                    JOptionPane.showConfirmDialog(null,
+                        "Erro ao ler o arquivo. mensagem"+"\n"+ex.getMessage(),
+                        "Erro",
+                        JOptionPane.DEFAULT_OPTION,
+                        JOptionPane.ERROR_MESSAGE
+                    );
                 }
-                arq = new FileReader("src\\Arquivos\\ContaAdministrador.txt");
-                lerArq = new BufferedReader(arq);
-                linha = lerArq.readLine(); 
-                while (linha != null) {
-                    if(linha.contains("Usuario: ")){
-                        if(fieldUsuario.getText().equals(linha.split(": ")[1])){
-                            linha = lerArq.readLine();
-                            if(linha.contains("Senha: ")){
-                                if(password.getText().equals(linha.split(": ")[1])){
-                                    Menu m = new Menu('a');
-                                    m.setVisible(true);
-                                }
-                            }        
-                        }
-                    }
-                    linha = lerArq.readLine(); 
-                }
-            } catch (IOException ex) {
+            } catch (FileNotFoundException ex) {
                 JOptionPane.showConfirmDialog(null,
-                    "Erro ao ler o arquivo. mensagem"+"\n"+ex.getMessage(),
+                    "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
                     "Erro",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.ERROR_MESSAGE
                 );
             }
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showConfirmDialog(null,
-                "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
-                "Erro",
-                JOptionPane.DEFAULT_OPTION,
-                JOptionPane.ERROR_MESSAGE
-            );
-        } 
+        } else {
+            this.dispose();
+        }
     }//GEN-LAST:event_ButtonEntrarActionPerformed
 
     private void ButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonCadastrarActionPerformed
@@ -247,7 +254,7 @@ public class Login extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login('n').setVisible(true);
+                new Login('n', true).setVisible(true);
             }
         });
     }
