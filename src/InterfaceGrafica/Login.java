@@ -159,7 +159,7 @@ public class Login extends javax.swing.JFrame {
                             }
                         }
                         linha = lerArq.readLine(); 
-                    }// lê a primeira linha
+                    }
                     arq = new FileReader("src\\Arquivos\\ContaProfissional.txt");
                     lerArq = new BufferedReader(arq);
                     linha = lerArq.readLine(); 

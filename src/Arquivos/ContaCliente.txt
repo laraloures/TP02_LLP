@@ -2,19 +2,3 @@ Nome: a
 Usuario: a
 Senha: a
 Email: a
-Nome: 
-Usuario: 
-Senha: 
-Email: 
-Nome: 
-Usuario: 
-Senha: 
-Email: 
-Nome: 
-Usuario: 
-Senha: 
-Email: 
-Nome: 
-Usuario: 
-Senha: 
-Email: 
