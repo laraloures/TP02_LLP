@@ -20,14 +20,22 @@ public class Lista extends javax.swing.JPanel {
     private char tipoLista;
     private char tipoUsuario;
     private ArrayList<Servico> servico_list;
+    private DefaultListModel model;
     
     public Lista(char tipoLista, char tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+        model = new DefaultListModel();
+        ArrayList<Servico> servico_list = AcessFile.lista_servicos_all();
+        for(int i=0; i<servico_list.size(); i++) {
+            model.add(i, servico_list.get(i).getNome());
+        }
+        
         initComponents();
         this.setVisible(true);
         this.tipoLista = tipoLista;
         if(tipoLista == 's') {
             jLabel1.setText("Lista de serviços");
-            ArrayList<Servico> servico_list = AcessFile.lista_servicos_all();
+            //ArrayList<Servico> servico_list = AcessFile.lista_servicos_all();
         }
         else 
            jLabel1.setText("Lista de pedidos");
@@ -49,11 +57,7 @@ public class Lista extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        jList1.setModel(model);
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -103,6 +107,35 @@ public class Lista extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        if(tipoUsuario == 'a') {
+            if(tipoLista == 's'){
+                int indice = jList1.getSelectedIndex();
+                servico_list = AcessFile.lista_servicos_all();
+                AcessFile.alterar_status_servico(servico_list.get(indice).getNome(), true);
+                System.out.println("Alterado!");
+                /*
+                //Bloco abaixo é pra teste
+                model = new DefaultListModel();
+                servico_list = AcessFile.lista_servicos_all();
+                for(int i=0; i<servico_list.size(); i++) {
+                    model.add(i, servico_list.get(i).getNome());
+                }
+                */
+                for(int i = 0; i < jList1.getModel().getSize(); i++) {
+                    if(i == indice) {
+                        //texto = jList1.getSelectedValue().contains("Habilitado") ? jList1.getSelectedValue().replace("Habilitado", "Desabilitado") : jList1.getSelectedValue().replace("Desabilitado", "Habilitado");
+                    } else {
+                        //modelo.addElement(jList1.getModel().getElementAt(i));
+                    }
+                }
+                //jList1.setModel(modelo);
+                // salvar a nova jList no arquivo
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
         jButton1.setEnabled(jList1.getSelectedIndex() != -1);
         if(tipoUsuario == 'a'){
@@ -112,31 +145,6 @@ public class Lista extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jList1ValueChanged
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(tipoUsuario == 'a') {
-            if(tipoLista == 's'){
-                int indice = jList1.getSelectedIndex();
-                
-                DefaultListModel<String> modelo = new DefaultListModel<>();
-               /* 
-                for(int i=0; i<servico_list.size(); i++) {
-                    System.out.println(servico_list.get(i).getNome());
-                    modelo.addElement(servico_list.get(i).getNome());
-                }*/
-                for(int i = 0; i < jList1.getModel().getSize(); i++) {
-                    if(i == indice) {
-                        //texto = jList1.getSelectedValue().contains("Habilitado") ? jList1.getSelectedValue().replace("Habilitado", "Desabilitado") : jList1.getSelectedValue().replace("Desabilitado", "Habilitado");
-                        //modelo.addElement(texto);
-                    } else {
-                        modelo.addElement(jList1.getModel().getElementAt(i));
-                    }
-                }
-                jList1.setModel(modelo);
-                // salvar a nova jList no arquivo
-            }
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

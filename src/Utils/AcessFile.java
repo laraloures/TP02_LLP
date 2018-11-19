@@ -45,6 +45,7 @@ public class AcessFile {
         BufferedWriter buffWrite= null;
         try {
             buffWrite = new BufferedWriter(new FileWriter(arquivo, true));
+            
         } catch (IOException ex) {
             JOptionPane.showConfirmDialog(null,
                 "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
@@ -82,6 +83,55 @@ public class AcessFile {
         }
     }
     
+    public static void limpa_arquivo() {
+        String path = "src\\Arquivos\\Servico.txt";
+        File arquivo = new File(path);
+        if(!arquivo.exists()){
+            try {
+                arquivo.createNewFile();
+            } catch (IOException ex) {
+                JOptionPane.showConfirmDialog(null,
+                "Erro ao criar o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+            }
+        }
+        BufferedWriter buffWrite= null;
+        try {
+            buffWrite = new BufferedWriter(new FileWriter(arquivo, false));
+            
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        try {
+            buffWrite.write("\n");
+	    
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao escrever o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        try {
+            buffWrite.close();
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao fechar o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
     
     // Funções de Leitura de Serviços
     public static ArrayList<Servico> lista_servicos_all(){
@@ -256,14 +306,17 @@ public class AcessFile {
     //Funções para alteração de Serviços
     public static void alterar_status_servico(String nomeServico, boolean status) {
       ArrayList<Servico> servico_list = lista_servicos_all();
+        
       for(int i=0; i<servico_list.size(); i++) {
         if(servico_list.get(i).getNome().equals(nomeServico)){
           servico_list.get(i).setServico_ativado(status);
         }
       }
-      for(int i=0; i<servico_list.size(); i++) {
-        cadastro_servico(servico_list.get(i).getNome(), servico_list.get(i).getDescricao(), servico_list.get(i).isServico_ativado());
+      limpa_arquivo();
+      for(int j=0; j<servico_list.size(); j++) {
+        cadastro_servico(servico_list.get(j).getNome(), servico_list.get(j).getDescricao(), servico_list.get(j).isServico_ativado());
       }
+        
     }
     
     public static void apaga_servico(String nomeServico) {
@@ -274,6 +327,7 @@ public class AcessFile {
           servico_list_new.add(servico_list.get(i));
         }
       }
+      limpa_arquivo();
       for(int i=0; i<servico_list.size(); i++) {
         cadastro_servico(servico_list.get(i).getNome(), servico_list.get(i).getDescricao(), servico_list.get(i).isServico_ativado());
       }
