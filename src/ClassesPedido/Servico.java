@@ -6,12 +6,14 @@
 package ClassesPedido;
 
 import ClassesUsuario.Profissional;
+import Utils.AcessFile;
+
 
 /**
  *
  * @author Nelore
  */
-public class Servico {
+public class Servico extends AcessFile {
     
     private String nome;
     private String descricao;
@@ -51,6 +53,5 @@ public class Servico {
     public void setServico_ativado(boolean servico_ativado) {
         this.servico_ativado = servico_ativado;
     }
-    
     
 }

@@ -25,6 +25,13 @@ public class Menu extends javax.swing.JFrame {
         this.setLocationRelativeTo(this);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.pack();
+        
+        //Habilita o botão de Cadastrar Novo serviço somente se o usuário for um admin ou prestador.
+        if(this.tipoUsuario == 'a' || this.tipoUsuario == 'p'){
+            this.novo_servico.setVisible(true);
+        } else {
+            this.novo_servico.setVisible(false);
+        }
     }
 
     /**
@@ -50,6 +57,7 @@ public class Menu extends javax.swing.JFrame {
         jMenu4 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        novo_servico = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -107,6 +115,19 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu4);
 
+        novo_servico.setText("Novo Serviço");
+        novo_servico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                novo_servicoMouseClicked(evt);
+            }
+        });
+        novo_servico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddServicoActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(novo_servico);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -146,6 +167,21 @@ public class Menu extends javax.swing.JFrame {
         this.validate();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void AddServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddServicoActionPerformed
+        /* Tá no lugar errado, ignora
+        //Abrir uma nova janela para cadastro de Novo serviço
+        Cadastro_Servico cadastro_servico = new Cadastro_Servico();
+        cadastro_servico.setVisible(true);
+        */
+        
+    }//GEN-LAST:event_AddServicoActionPerformed
+
+    private void novo_servicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_novo_servicoMouseClicked
+         //Abrir uma nova janela para cadastro de Novo serviço
+        Cadastro_Servico cadastro_servico = new Cadastro_Servico();
+        cadastro_servico.setVisible(true);
+    }//GEN-LAST:event_novo_servicoMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
@@ -162,5 +198,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem menuCadastro;
+    private javax.swing.JMenu novo_servico;
     // End of variables declaration//GEN-END:variables
 }

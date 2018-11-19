@@ -154,6 +154,7 @@ public class Login extends javax.swing.JFrame {
                                     if(password.getText().equals(linha.split(": ")[1])){
                                         Menu m = new Menu('c');
                                         m.setVisible(true);
+                                        this.setVisible(false);
                                     }
                                 }        
                             }
@@ -171,6 +172,7 @@ public class Login extends javax.swing.JFrame {
                                     if(password.getText().equals(linha.split(": ")[1])){
                                         Menu m = new Menu('p');
                                         m.setVisible(true);
+                                        this.setVisible(false);
                                     }
                                 }        
                             }
@@ -188,6 +190,7 @@ public class Login extends javax.swing.JFrame {
                                     if(password.getText().equals(linha.split(": ")[1])){
                                         Menu m = new Menu('a');
                                         m.setVisible(true);
+                                        this.setVisible(false);
                                     }
                                 }        
                             }
