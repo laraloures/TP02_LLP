@@ -5,9 +5,12 @@
  */
 package InterfaceGrafica;
 
+import ClassesPedido.Servico;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
+
+import Utils.AcessFile;
 
 /**
  *
@@ -16,15 +19,19 @@ import javax.swing.ListModel;
 public class Lista extends javax.swing.JPanel {
     private char tipoLista;
     private char tipoUsuario;
-
+    private ArrayList<Servico> servico_list;
+    
     public Lista(char tipoLista, char tipoUsuario) {
         initComponents();
         this.setVisible(true);
         this.tipoLista = tipoLista;
-        if(tipoLista == 's')
+        if(tipoLista == 's') {
             jLabel1.setText("Lista de serviços");
+            ArrayList<Servico> servico_list = AcessFile.lista_servicos_all();
+        }
         else 
            jLabel1.setText("Lista de pedidos");
+        
         jButton1.setEnabled(false);
     }
 
@@ -110,12 +117,17 @@ public class Lista extends javax.swing.JPanel {
         if(tipoUsuario == 'a') {
             if(tipoLista == 's'){
                 int indice = jList1.getSelectedIndex();
-                String texto;
+                
                 DefaultListModel<String> modelo = new DefaultListModel<>();
+               /* 
+                for(int i=0; i<servico_list.size(); i++) {
+                    System.out.println(servico_list.get(i).getNome());
+                    modelo.addElement(servico_list.get(i).getNome());
+                }*/
                 for(int i = 0; i < jList1.getModel().getSize(); i++) {
                     if(i == indice) {
-                        texto = jList1.getSelectedValue().contains("Habilitado") ? jList1.getSelectedValue().replace("Habilitado", "Desabilitado") : jList1.getSelectedValue().replace("Desabilitado", "Habilitado");
-                        modelo.addElement(texto);
+                        //texto = jList1.getSelectedValue().contains("Habilitado") ? jList1.getSelectedValue().replace("Habilitado", "Desabilitado") : jList1.getSelectedValue().replace("Desabilitado", "Habilitado");
+                        //modelo.addElement(texto);
                     } else {
                         modelo.addElement(jList1.getModel().getElementAt(i));
                     }

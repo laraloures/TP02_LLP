@@ -29,6 +29,7 @@ public class Servico extends AcessFile {
         //O serviço sempre é inicializado como não ativado, até que um Admin o ative
         this.servico_ativado = false;
     }
+    public Servico(){}
 
     public String getNome() {
         return nome;

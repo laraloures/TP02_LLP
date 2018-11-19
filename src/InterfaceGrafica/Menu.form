@@ -92,6 +92,14 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddServicoActionPerformed"/>
           </Events>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="servicos_cadastrados">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Servi&#xe7;os Cadastrados"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="servicos_cadastradosMouseClicked"/>
+          </Events>
+        </Menu>
       </SubComponents>
     </Menu>
   </NonVisualComponents>

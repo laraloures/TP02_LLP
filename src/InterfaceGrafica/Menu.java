@@ -29,8 +29,12 @@ public class Menu extends javax.swing.JFrame {
         //Habilita o botão de Cadastrar Novo serviço somente se o usuário for um admin ou prestador.
         if(this.tipoUsuario == 'a' || this.tipoUsuario == 'p'){
             this.novo_servico.setVisible(true);
+            if(this.tipoUsuario == 'p') {
+                this.servicos_cadastrados.setVisible(true);
+            }
         } else {
             this.novo_servico.setVisible(false);
+            this.servicos_cadastrados.setVisible(false);
         }
     }
 
@@ -58,6 +62,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         novo_servico = new javax.swing.JMenu();
+        servicos_cadastrados = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -128,6 +133,14 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenuBar1.add(novo_servico);
 
+        servicos_cadastrados.setText("Serviços Cadastrados");
+        servicos_cadastrados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                servicos_cadastradosMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(servicos_cadastrados);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -182,6 +195,12 @@ public class Menu extends javax.swing.JFrame {
         cadastro_servico.setVisible(true);
     }//GEN-LAST:event_novo_servicoMouseClicked
 
+    private void servicos_cadastradosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_servicos_cadastradosMouseClicked
+        // TODO add your handling code here:
+        Vinculo_Servico_Prestador vinculo_servico_prestador = new Vinculo_Servico_Prestador();
+        vinculo_servico_prestador.setVisible(true);
+    }//GEN-LAST:event_servicos_cadastradosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
@@ -199,5 +218,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem menuCadastro;
     private javax.swing.JMenu novo_servico;
+    private javax.swing.JMenu servicos_cadastrados;
     // End of variables declaration//GEN-END:variables
 }
