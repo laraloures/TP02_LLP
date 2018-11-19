@@ -149,10 +149,11 @@ public class Login extends javax.swing.JFrame {
                     while (linha != null) {
                         if(linha.contains("Usuario: ")){
                             if(fieldUsuario.getText().equals(linha.split(": ")[1])){
+                                String userName = linha.split(": ")[1];
                                 linha = lerArq.readLine();
                                 if(linha.contains("Senha: ")){
                                     if(password.getText().equals(linha.split(": ")[1])){
-                                        Menu m = new Menu('c');
+                                        Menu m = new Menu('c', userName);
                                         m.setVisible(true);
                                         this.setVisible(false);
                                     }
@@ -167,10 +168,11 @@ public class Login extends javax.swing.JFrame {
                     while (linha != null) {
                         if(linha.contains("Usuario: ")){
                             if(fieldUsuario.getText().equals(linha.split(": ")[1])){
+                                String userName = linha.split(": ")[1];
                                 linha = lerArq.readLine();
                                 if(linha.contains("Senha: ")){
                                     if(password.getText().equals(linha.split(": ")[1])){
-                                        Menu m = new Menu('p');
+                                        Menu m = new Menu('p',userName);
                                         m.setVisible(true);
                                         this.setVisible(false);
                                     }
@@ -185,10 +187,11 @@ public class Login extends javax.swing.JFrame {
                     while (linha != null) {
                         if(linha.contains("Usuario: ")){
                             if(fieldUsuario.getText().equals(linha.split(": ")[1])){
+                                String userName = linha.split(": ")[1];
                                 linha = lerArq.readLine();
                                 if(linha.contains("Senha: ")){
                                     if(password.getText().equals(linha.split(": ")[1])){
-                                        Menu m = new Menu('a');
+                                        Menu m = new Menu('a', userName);
                                         m.setVisible(true);
                                         this.setVisible(false);
                                     }

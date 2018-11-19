@@ -6,6 +6,9 @@
 package Utils;
 
 import ClassesPedido.Servico;
+import ClassesPedido.Servico_Prestador;
+import ClassesUsuario.Administrador;
+import ClassesUsuario.Usuario;
 import InterfaceGrafica.Menu;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -331,6 +334,122 @@ public class AcessFile {
       for(int i=0; i<servico_list.size(); i++) {
         cadastro_servico(servico_list.get(i).getNome(), servico_list.get(i).getDescricao(), servico_list.get(i).isServico_ativado());
       }
+    }
+    
+    // Leitura de ContaProfissional, ContaCliente, ContaAdministrador
+    public static Usuario lista_conta(char tipoConta, String userName){
+        try {    
+            FileReader arq;
+            switch(tipoConta){
+                case 'a':
+                    arq = new FileReader("src\\Arquivos\\ContaAdministrador.txt");
+                    break;
+                case 'p':
+                    arq = new FileReader("src\\Arquivos\\ContaProfissional.txt");
+                    break;
+                case 'c':
+                default:
+                    arq = new FileReader("src\\Arquivos\\ContaCliente.txt");
+            }
+            BufferedReader lerArq = new BufferedReader(arq);
+            try {
+                String linha;
+                linha = lerArq.readLine(); 
+                while (linha != null) {
+                    if(linha.contains("Nome: ")){
+                        String nome = linha.substring(linha.indexOf(":")+2,linha.length());
+                        linha = lerArq.readLine();
+                        String usuario = linha.substring(linha.indexOf(":")+2,linha.length());
+                        if(usuario.equals(userName)){
+                            linha = lerArq.readLine();
+                            String senha = linha.substring(linha.indexOf(":")+2,linha.length());
+                            linha = lerArq.readLine();
+                            String email = linha.substring(linha.indexOf(":")+2,linha.length());
+                            Usuario user = new Usuario(nome, userName, email, senha) {};
+                            return user;
+                        }
+                        linha = lerArq.readLine();
+                        
+                    }        
+                    linha = lerArq.readLine(); 
+                }
+            } catch (IOException ex) {
+                JOptionPane.showConfirmDialog(null,
+                    "Erro ao ler o arquivo. mensagem"+"\n"+ex.getMessage(),
+                    "Erro",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        return null;
+    }
+    
+    //Cadastros de servico_prestador
+    
+    public static void cadastro_servico_prestador(Servico_Prestador servicoPrestador) {
+    
+        String path = "src\\Arquivos\\Servico_Prestador.txt";
+        File arquivo = new File(path);
+        if(!arquivo.exists()){
+            try {
+                arquivo.createNewFile();
+            } catch (IOException ex) {
+                JOptionPane.showConfirmDialog(null,
+                "Erro ao criar o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+            }
+        }
+        BufferedWriter buffWrite= null;
+        try {
+            buffWrite = new BufferedWriter(new FileWriter(arquivo, true));
+            
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        try {
+            buffWrite.write("Nome do Servico: "+servicoPrestador.getServico().getNome());
+	    buffWrite.newLine();
+            buffWrite.write("Prestador do Servico: "+servicoPrestador.getPrestador().getUsuario());
+	    buffWrite.newLine();
+            buffWrite.write("Valor: "+servicoPrestador.getValor());
+	    buffWrite.newLine();
+            buffWrite.write("---------"); 
+	    buffWrite.newLine();
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao escrever o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        try {
+            buffWrite.close();
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao fechar o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        
     }
 }
 

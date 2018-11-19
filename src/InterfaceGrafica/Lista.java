@@ -19,18 +19,31 @@ import Utils.AcessFile;
 public class Lista extends javax.swing.JPanel {
     private char tipoLista;
     private char tipoUsuario;
+    private String nomeUsuario;
     private ArrayList<Servico> servico_list;
     private DefaultListModel model;
     
-    public Lista(char tipoLista, char tipoUsuario) {
+    public Lista(char tipoLista, char tipoUsuario, String nomeUsuario) {
         this.tipoUsuario = tipoUsuario;
+        this.nomeUsuario = nomeUsuario;
         model = new DefaultListModel();
-        ArrayList<Servico> servico_list = AcessFile.lista_servicos_all();
+        if(this.tipoUsuario=='a'){
+            servico_list = AcessFile.lista_servicos_all();
+        } else {
+            servico_list = AcessFile.lista_servicos_ativos();
+        }
         for(int i=0; i<servico_list.size(); i++) {
             model.add(i, servico_list.get(i).getNome());
         }
         
         initComponents();
+        if(this.tipoUsuario=='p' ||this.tipoUsuario=='c'){
+            button_habilitar.setVisible(false);
+        }
+        if(this.tipoUsuario != 'p') {
+            button_vincular.setVisible(false);
+        }
+        
         this.setVisible(true);
         this.tipoLista = tipoLista;
         if(tipoLista == 's') {
@@ -40,7 +53,7 @@ public class Lista extends javax.swing.JPanel {
         else 
            jLabel1.setText("Lista de pedidos");
         
-        jButton1.setEnabled(false);
+        button_habilitar.setEnabled(false);
     }
 
     /**
@@ -54,8 +67,9 @@ public class Lista extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        button_habilitar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        button_vincular = new javax.swing.JButton();
 
         jList1.setModel(model);
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -66,14 +80,21 @@ public class Lista extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jList1);
 
-        jButton1.setText("Habilitar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        button_habilitar.setText("Habilitar");
+        button_habilitar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                button_habilitarActionPerformed(evt);
             }
         });
 
         jLabel1.setText("Lista de");
+
+        button_vincular.setText("Agregar como Serviço");
+        button_vincular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_vincularActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -83,13 +104,15 @@ public class Lista extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jButton1)
-                        .addGap(29, 29, 29))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(button_vincular, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                            .addComponent(button_habilitar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,12 +125,14 @@ public class Lista extends javax.swing.JPanel {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(137, 137, 137))))
+                        .addComponent(button_habilitar)
+                        .addGap(18, 18, 18)
+                        .addComponent(button_vincular)
+                        .addGap(96, 96, 96))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void button_habilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_habilitarActionPerformed
 
         if(tipoUsuario == 'a') {
             if(tipoLista == 's'){
@@ -134,21 +159,33 @@ public class Lista extends javax.swing.JPanel {
                 // salvar a nova jList no arquivo
             }
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_button_habilitarActionPerformed
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
-        jButton1.setEnabled(jList1.getSelectedIndex() != -1);
+        button_habilitar.setEnabled(jList1.getSelectedIndex() != -1);
         if(tipoUsuario == 'a'){
             if(tipoLista == 's'){
                 String texto = jList1.getSelectedValue().contains("Habilitado") ? "Desabilitar" : "Habilitar";
-                jButton1.setText(texto);
+                button_habilitar.setText(texto);
             }
         }
     }//GEN-LAST:event_jList1ValueChanged
 
+    private void button_vincularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_vincularActionPerformed
+        
+        //Vincular o serviço ao prestador
+        if(tipoLista == 's'){
+            int indice = jList1.getSelectedIndex();
+            servico_list = AcessFile.lista_servicos_ativos();
+            Vinculo_Servico_Prestador confirmar_vinculo = new Vinculo_Servico_Prestador(servico_list.get(indice), nomeUsuario);
+            confirmar_vinculo.setVisible(true);
+        }
+    }//GEN-LAST:event_button_vincularActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton button_habilitar;
+    private javax.swing.JButton button_vincular;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;

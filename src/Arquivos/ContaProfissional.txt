@@ -2,3 +2,7 @@ Nome: Nelore
 Usuario: oporra
 Senha: oporra
 Email: oporra
+Nome: tika
+Usuario: tika
+Senha: tika
+Email: tika

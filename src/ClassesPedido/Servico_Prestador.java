@@ -6,6 +6,7 @@
 package ClassesPedido;
 
 import ClassesUsuario.Profissional;
+import ClassesUsuario.Usuario;
 
 /**
  *
@@ -13,6 +14,41 @@ import ClassesUsuario.Profissional;
  */
 public class Servico_Prestador {
     private Servico servico;
-    private Profissional prestador;
+    private Usuario prestador;
     private double valor;
+
+    public Servico_Prestador() {
+    }
+
+    public Servico_Prestador(Servico servico, Usuario prestador, double valor) {
+        this.servico = servico;
+        this.prestador = prestador;
+        this.valor = valor;
+    }
+
+    public Servico getServico() {
+        return servico;
+    }
+
+    public void setServico(Servico servico) {
+        this.servico = servico;
+    }
+
+    public Usuario getPrestador() {
+        return prestador;
+    }
+
+    public void setPrestador(Profissional prestador) {
+        this.prestador = prestador;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+    
+    
 }

@@ -14,13 +14,15 @@ import javax.swing.JFrame;
 public class Menu extends javax.swing.JFrame {
 
     private char tipoUsuario;
+    private String nomeUsuario;
     private Lista servico;
     private Lista pedido;
     
-    public Menu(char tipoUsuario) {
+    public Menu(char tipoUsuario, String nomeUsuario) {
         this.tipoUsuario = tipoUsuario;
-        servico = new Lista('s', tipoUsuario);
-        pedido = new Lista('p', tipoUsuario);
+        this.nomeUsuario = nomeUsuario;
+        servico = new Lista('s', tipoUsuario, nomeUsuario);
+        pedido = new Lista('p', tipoUsuario, nomeUsuario);
         initComponents();
         this.setLocationRelativeTo(this);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
