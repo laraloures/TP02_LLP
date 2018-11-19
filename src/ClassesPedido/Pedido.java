@@ -14,39 +14,13 @@ import java.util.ArrayList;
  */
 
 
+
 public class Pedido {
     
-    public class Pedido_item {
-        private int item_qtd;
-        private Servico_Prestador servico;
-
-        public Pedido_item(int item_qtd, Servico_Prestador servico) {
-            this.item_qtd = item_qtd;
-            this.servico = servico;
-        }
-        public Pedido_item(){}
-        
-        public int getItem_qtd() {
-            return item_qtd;
-        }
-
-        public void setItem_qtd(int item_qtd) {
-            this.item_qtd = item_qtd;
-        }
-
-        public Servico_Prestador getServico() {
-            return servico;
-        }
-
-        public void setServico(Servico_Prestador servico) {
-            this.servico = servico;
-        }
-        
-        
-    }
+    
     
     private int numero_pedido;
-    public ArrayList<Pedido_item> item_list;
+    public ArrayList<Pedido_Item> item_list;
     private Cliente cliente;
     private double valor_total;
     private int pedido_status;
@@ -67,11 +41,11 @@ public class Pedido {
         this.numero_pedido = numero_pedido;
     }
 
-    public ArrayList<Pedido_item> getItem_list() {
+    public ArrayList<Pedido_Item> getItem_list() {
         return item_list;
     }
 
-    public void setItem_list(ArrayList<Pedido_item> item_list) {
+    public void setItem_list(ArrayList<Pedido_Item> item_list) {
         this.item_list = item_list;
     }
 
