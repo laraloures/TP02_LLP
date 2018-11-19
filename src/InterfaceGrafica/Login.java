@@ -139,7 +139,9 @@ public class Login extends javax.swing.JFrame {
 
     private void ButtonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEntrarActionPerformed
         if(menu){
+            boolean logged = false;
             try {
+               if(!logged) {
                 FileReader arq;
                 arq = new FileReader("src\\Arquivos\\ContaCliente.txt");
                 BufferedReader lerArq = new BufferedReader(arq);
@@ -156,6 +158,7 @@ public class Login extends javax.swing.JFrame {
                                         Menu m = new Menu('c', userName);
                                         m.setVisible(true);
                                         this.setVisible(false);
+                                        logged = true;
                                     }
                                 }        
                             }
@@ -175,6 +178,7 @@ public class Login extends javax.swing.JFrame {
                                         Menu m = new Menu('p',userName);
                                         m.setVisible(true);
                                         this.setVisible(false);
+                                        logged = true;
                                     }
                                 }        
                             }
@@ -194,12 +198,16 @@ public class Login extends javax.swing.JFrame {
                                         Menu m = new Menu('a', userName);
                                         m.setVisible(true);
                                         this.setVisible(false);
+                                        logged = true;
                                     }
                                 }        
                             }
                         }
                         linha = lerArq.readLine(); 
                     }
+                    if(!logged)
+                        JOptionPane.showMessageDialog(null, "Dados de acesso inválidos!");
+                  
                 } catch (IOException ex) {
                     JOptionPane.showConfirmDialog(null,
                         "Erro ao ler o arquivo. mensagem"+"\n"+ex.getMessage(),
@@ -208,6 +216,7 @@ public class Login extends javax.swing.JFrame {
                         JOptionPane.ERROR_MESSAGE
                     );
                 }
+               }
             } catch (FileNotFoundException ex) {
                 JOptionPane.showConfirmDialog(null,
                     "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),

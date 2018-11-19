@@ -24,7 +24,7 @@ public class Pedido {
             this.item_qtd = item_qtd;
             this.servico = servico;
         }
-
+        public Pedido_item(){}
         
         public int getItem_qtd() {
             return item_qtd;
@@ -46,7 +46,7 @@ public class Pedido {
     }
     
     private int numero_pedido;
-    private ArrayList<Pedido_item> item_list;
+    public ArrayList<Pedido_item> item_list;
     private Cliente cliente;
     private double valor_total;
     private int pedido_status;
@@ -56,6 +56,8 @@ public class Pedido {
         this.cliente = cliente;
         this.pedido_status = pedido_status;
     }
+    
+    public Pedido(){}
     
     public int getNumero_pedido() {
         return numero_pedido;

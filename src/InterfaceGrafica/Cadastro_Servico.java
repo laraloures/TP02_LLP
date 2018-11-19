@@ -38,7 +38,7 @@ public class Cadastro_Servico extends javax.swing.JFrame {
         servico_cancelar = new javax.swing.JButton();
         servico_cadastro = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N

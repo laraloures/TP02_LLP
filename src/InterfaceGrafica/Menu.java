@@ -32,11 +32,11 @@ public class Menu extends javax.swing.JFrame {
         if(this.tipoUsuario == 'a' || this.tipoUsuario == 'p'){
             this.novo_servico.setVisible(true);
             if(this.tipoUsuario == 'p') {
-                this.servicos_cadastrados.setVisible(true);
+               // this.servicos_cadastrados.setVisible(true);
             }
         } else {
             this.novo_servico.setVisible(false);
-            this.servicos_cadastrados.setVisible(false);
+           // this.servicos_cadastrados.setVisible(false);
         }
     }
 
@@ -64,7 +64,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         novo_servico = new javax.swing.JMenu();
-        servicos_cadastrados = new javax.swing.JMenu();
+        novoPedido = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -135,13 +135,13 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenuBar1.add(novo_servico);
 
-        servicos_cadastrados.setText("Serviços Cadastrados");
-        servicos_cadastrados.addMouseListener(new java.awt.event.MouseAdapter() {
+        novoPedido.setText("Novo Pedido");
+        novoPedido.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                servicos_cadastradosMouseClicked(evt);
+                novoPedidoMouseClicked(evt);
             }
         });
-        jMenuBar1.add(servicos_cadastrados);
+        jMenuBar1.add(novoPedido);
 
         setJMenuBar(jMenuBar1);
 
@@ -197,11 +197,10 @@ public class Menu extends javax.swing.JFrame {
         cadastro_servico.setVisible(true);
     }//GEN-LAST:event_novo_servicoMouseClicked
 
-    private void servicos_cadastradosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_servicos_cadastradosMouseClicked
-        // TODO add your handling code here:
-        Vinculo_Servico_Prestador vinculo_servico_prestador = new Vinculo_Servico_Prestador();
-        vinculo_servico_prestador.setVisible(true);
-    }//GEN-LAST:event_servicos_cadastradosMouseClicked
+    private void novoPedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_novoPedidoMouseClicked
+        // Abrir uma nova tela para o cadastro do pedido
+        CriaPedido criaPedido = new CriaPedido(nomeUsuario);
+    }//GEN-LAST:event_novoPedidoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -219,7 +218,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem menuCadastro;
+    private javax.swing.JMenu novoPedido;
     private javax.swing.JMenu novo_servico;
-    private javax.swing.JMenu servicos_cadastrados;
     // End of variables declaration//GEN-END:variables
 }

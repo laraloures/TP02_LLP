@@ -92,12 +92,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AddServicoActionPerformed"/>
           </Events>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="servicos_cadastrados">
+        <Menu class="javax.swing.JMenu" name="novoPedido">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Servi&#xe7;os Cadastrados"/>
+            <Property name="text" type="java.lang.String" value="Novo Pedido"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="servicos_cadastradosMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="novoPedidoMouseClicked"/>
           </Events>
         </Menu>
       </SubComponents>

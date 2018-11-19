@@ -5,9 +5,12 @@
  */
 package Utils;
 
+import ClassesPedido.Pedido;
+import ClassesPedido.Pedido.Pedido_item;
 import ClassesPedido.Servico;
 import ClassesPedido.Servico_Prestador;
 import ClassesUsuario.Administrador;
+import ClassesUsuario.Cliente;
 import ClassesUsuario.Usuario;
 import InterfaceGrafica.Menu;
 import java.io.BufferedReader;
@@ -450,6 +453,142 @@ public class AcessFile {
             );
         }
         
+    }
+    
+    public static void cadastra_pedido(Pedido pedido){
+        String path = "src\\Arquivos\\Pedido.txt";
+        File arquivo = new File(path);
+        if(!arquivo.exists()){
+            try {
+                arquivo.createNewFile();
+            } catch (IOException ex) {
+                JOptionPane.showConfirmDialog(null,
+                "Erro ao criar o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+            }
+        }
+        BufferedWriter buffWrite= null;
+        try {
+            buffWrite = new BufferedWriter(new FileWriter(arquivo, true));
+            
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        try {
+            buffWrite.write("Numero do pedido: "+pedido.getNumero_pedido());
+	    buffWrite.newLine();
+            buffWrite.write("Nome do cliente: "+pedido.getCliente().getNome());
+	    buffWrite.newLine();
+            buffWrite.write("Lista de itens: ");
+            buffWrite.newLine();
+            for(int i=0; i<pedido.getItem_list().size(); i++) {
+                buffWrite.write(pedido.getItem_list().get(i).getServico().getServico().getNome());
+                buffWrite.write("??"+pedido.getItem_list().get(i).getServico().getValor());
+                buffWrite.write("@@"+pedido.getItem_list().get(i).getItem_qtd());
+                buffWrite.write("$$"+pedido.getItem_list().get(i).getServico().getPrestador().getUsuario());
+                buffWrite.newLine();
+            }
+            buffWrite.write("Valor: "+ Double.toString(pedido.getValor_total())) ;
+	    buffWrite.newLine();
+            buffWrite.write("Status do pedido: "+ pedido.getPedido_status());
+	    buffWrite.newLine();
+            buffWrite.write("---------"); 
+	    buffWrite.newLine();
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao escrever o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        try {
+            buffWrite.close();
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao fechar o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        } 
+    }
+    
+    public static ArrayList<Pedido> lista_pedidos() {
+        ArrayList<Pedido> lista_pedidos_all = new ArrayList();  
+        try {    
+            FileReader arq;
+            arq = new FileReader("src\\Arquivos\\Pedido.txt");
+            BufferedReader lerArq = new BufferedReader(arq);
+            try {
+                String linha;
+                linha = lerArq.readLine(); 
+                while (linha != null) {
+                    Pedido pedido = new Pedido();
+                    if(linha.contains("Numero: ")){
+                        pedido.setNumero_pedido(Integer.parseInt(linha.substring(linha.indexOf(":")+2,linha.length())));
+                        linha = lerArq.readLine();
+                        if(linha.contains("Nome do Cliente: ")){
+                          Cliente cliente = new Cliente();
+                          cliente.setNome(linha.substring(linha.indexOf(":")+2,linha.length()));
+                          pedido.setCliente(cliente);
+                          linha = lerArq.readLine(); 
+                          if(linha.contains("Lista de itens: ")){
+                            linha = lerArq.readLine();   
+                            while(!linha.startsWith("Valor :")){
+                                //Início ao ?? -> Nome do serviço
+                                // O jeito vai ser ler caractere a caractere, pqp
+                                String aux = null;
+                                for(int j=0; j<linha.length(); j++){
+                                    if(linha.charAt(j)!='?' && linha.charAt(j+1)!='?'){
+                                        aux += linha.charAt(j);
+                                    }
+                                }
+                                Pedido_item itemList = new Pedido_item();
+                                pedido.item_list.
+                                String result = linha.substring(linha.indexOf(":")+2,linha.length());
+                            }
+                            String result = linha.substring(linha.indexOf(":")+2,linha.length());
+                            if(result.equals("false")) {
+                                servico.setServico_ativado(false);
+                            } else {
+                                servico.setServico_ativado(true);
+                            }
+                            linha = lerArq.readLine(); 
+                            if(linha.contains("---------")){
+                                lista_servicos_all.add(servico);
+                            }
+                          }
+                        }
+                    }        
+                    linha = lerArq.readLine(); 
+                }
+                return lista_servicos_all;
+            } catch (IOException ex) {
+                JOptionPane.showConfirmDialog(null,
+                    "Erro ao ler o arquivo. mensagem"+"\n"+ex.getMessage(),
+                    "Erro",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        return lista_servicos_all;
     }
 }
 
