@@ -200,6 +200,7 @@ public class Menu extends javax.swing.JFrame {
     private void novoPedidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_novoPedidoMouseClicked
         // Abrir uma nova tela para o cadastro do pedido
         CriaPedido criaPedido = new CriaPedido(nomeUsuario);
+        criaPedido.setVisible(true);
     }//GEN-LAST:event_novoPedidoMouseClicked
 
 

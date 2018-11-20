@@ -456,6 +456,70 @@ public class AcessFile {
         
     }
     
+    //Leitura de Servico_Prestador
+    
+    public static ArrayList<Servico_Prestador> lista_servico_prestador(){
+        ArrayList<Servico_Prestador> lista_servicos_prestador_all = new ArrayList();  
+        try {    
+            FileReader arq;
+            arq = new FileReader("src\\Arquivos\\Servico_Prestador.txt");
+            BufferedReader lerArq = new BufferedReader(arq);
+            try {
+                String linha;
+                linha = lerArq.readLine(); 
+                while (linha != null) {
+                    Servico servico = new Servico();
+                    Servico_Prestador servicoPrestador = new Servico_Prestador();
+                    if(linha.contains("Nome do Servico: ")){
+                        servico.setNome(linha.substring(linha.indexOf(":")+2,linha.length()));
+                        linha = lerArq.readLine();
+                        if(linha.contains("Prestador do Servico: ")){
+                          servicoPrestador.setPrestador(new Profissional(null,linha.substring(linha.indexOf(":")+2,linha.length()) ,null, null));
+                          linha = lerArq.readLine(); 
+                          if(linha.contains("Valor: ")){
+                            servicoPrestador.setValor(Double.parseDouble(linha.substring(linha.indexOf(":")+2,linha.length())));
+                            linha = lerArq.readLine(); 
+                            if(linha.contains("---------")){
+                                servicoPrestador.setServico(servico);
+                                lista_servicos_prestador_all.add(servicoPrestador);
+                            }
+                          }
+                        }
+                    }        
+                    linha = lerArq.readLine(); 
+                }
+                return lista_servicos_prestador_all;
+            } catch (IOException ex) {
+                JOptionPane.showConfirmDialog(null,
+                    "Erro ao ler o arquivo. mensagem"+"\n"+ex.getMessage(),
+                    "Erro",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        return lista_servicos_prestador_all;
+    }
+    
+    public static ArrayList<Servico_Prestador> lista_servico_prestador_nome_servico(String nomeServico) {
+        ArrayList<Servico_Prestador> all_registros = AcessFile.lista_servico_prestador();
+        ArrayList<Servico_Prestador> finded_list = new ArrayList();
+        
+        for(int i=0; i<all_registros.size(); i++) {
+            if(all_registros.get(i).getServico().getNome().equals(nomeServico)) {
+                finded_list.add(all_registros.get(i));
+            }
+        }
+        return finded_list;
+    }
+    
     public static void cadastra_pedido(Pedido pedido){
         String path = "src\\Arquivos\\Pedido.txt";
         File arquivo = new File(path);
@@ -600,23 +664,27 @@ public class AcessFile {
                             //le a próxima linha
                                 linha = lerArq.readLine();   
                             }
-                            if(linha.startsWith("Valor :")) {
+                            if(linha.startsWith("Valor: ")) {
                                 pedido.setValor_total(Double.parseDouble(linha.substring(linha.indexOf(":")+2,linha.length())));
                                 //le a próxima linha
                                 linha = lerArq.readLine();   
                                 if(linha.startsWith("Status do Pedido: ")){
-                                    //FOI AQUI QUE EU PAREI, TEM QUE CONSERTAR AS CHAVES DO RESTO DA FUNÇÃO
+                                    pedido.setPedido_status(Integer.parseInt(linha.substring(linha.indexOf(":")+2,linha.length())));
+                                    //le a próxima linha
+                                    linha = lerArq.readLine();
+                                    if(linha.startsWith("-----")) {
+                                        lista_pedidos_all.add(pedido);
+                                    }
                                 }
                             }
                           }
                                 
                              
-                          }
+                          
                         }
                     }        
                     linha = lerArq.readLine(); 
                 }
-                return lista_servicos_all;
             } catch (IOException ex) {
                 JOptionPane.showConfirmDialog(null,
                     "Erro ao ler o arquivo. mensagem"+"\n"+ex.getMessage(),
@@ -633,8 +701,10 @@ public class AcessFile {
                 JOptionPane.ERROR_MESSAGE
             );
         }
-        return lista_servicos_all;
+        return lista_pedidos_all;
     }
+    
+    //public static Pedido procuraPedidoNumero(int numeroPedido) {}
 }
 
     
