@@ -29,9 +29,12 @@ public class Pedido {
         this.numero_pedido = numero_pedido;
         this.cliente = cliente;
         this.pedido_status = pedido_status;
+        item_list = new ArrayList();
     }
     
-    public Pedido(){}
+    public Pedido(){
+        item_list = new ArrayList();
+    }
     
     public int getNumero_pedido() {
         return numero_pedido;

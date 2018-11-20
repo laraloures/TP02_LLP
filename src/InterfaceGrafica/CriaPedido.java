@@ -37,6 +37,8 @@ public class CriaPedido extends javax.swing.JFrame {
         this.nomeUsuario = nomeUsuario;
         servicoList = AcessFile.lista_servicos_ativos();
         int numeroPedido = AcessFile.lista_pedidos().size()+1;
+        //System.out.println("pedidos:"+AcessFile.lista_pedidos().size());
+        
         
         pedido = new Pedido();
         pedido.setCliente(new Cliente(null, nomeUsuario, null, null));
@@ -52,12 +54,18 @@ public class CriaPedido extends javax.swing.JFrame {
         this.numPedido.setText(numeroPedido+"");
         this.clienteNome.setText(nomeUsuario);
         
+        /*
         if(prestadores_info != null) {
             if(prestadores_info.flagCreated) {
                 carrinho.add(prestadores_info.getPedido_item());
                 System.out.println("tá lá");
             }
         }
+        */
+    }
+    
+    void add_on_chart(Pedido_Item pedidoItem){
+        this.pedido.item_list.add(pedidoItem);
     }
 
     /**
@@ -178,13 +186,13 @@ public class CriaPedido extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Botão de detalhes do serviço (mostrar os prestadores do serviço e seus preços, recebendo o nome do serviço)
         int indice = jList1.getSelectedIndex();
-        prestadores_info = new Prestadores_info(servicoList.get(indice).getNome());
+        prestadores_info = new Prestadores_info(servicoList.get(indice).getNome(), this);
         prestadores_info.setVisible(true);
         //prestadores_info.
         //while(!prestadores_info.flagCreated) {
             //Não vai fazer nada enquanto o servico não for escolhido.
         //}
-        carrinho.add(prestadores_info.getPedido_item());
+        //carrinho.add(prestadores_info.getPedido_item());
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -196,8 +204,9 @@ public class CriaPedido extends javax.swing.JFrame {
         // Botão de finalizar pedido
         
         //Calcula o valor
-        for(int i=0; i<carrinho.size(); i++) {
-            pedido.setValor_total(pedido.getValor_total()+(carrinho.get(i).getItem_qtd()*carrinho.get(i).getServico().getValor()));
+        //System.out.println("Size do itemList = "+pedido.getItem_list().size());
+        for(int i=0; i<pedido.getItem_list().size(); i++) {
+            pedido.setValor_total(pedido.getValor_total()+(pedido.getItem_list().get(i).getItem_qtd()*pedido.getItem_list().get(i).getServico().getValor()));
         }
         /*
         PedidoStatus = 0 -> Em aberto
@@ -206,6 +215,7 @@ public class CriaPedido extends javax.swing.JFrame {
         
         pedido.setPedido_status(0);
         AcessFile.cadastra_pedido(pedido);
+        this.jButton3.setEnabled(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

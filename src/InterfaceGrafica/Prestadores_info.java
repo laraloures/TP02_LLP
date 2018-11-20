@@ -10,6 +10,7 @@ import ClassesPedido.Servico_Prestador;
 import Utils.AcessFile;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,12 +23,14 @@ public class Prestadores_info extends javax.swing.JFrame {
     private String nomeServico;
     ArrayList<Servico_Prestador> available;
     public boolean flagCreated;
+    CriaPedido criaPedido;
     
     /**
      * Creates new form Prestadores_info
      */
-    public Prestadores_info(String nomeServico) {
+    public Prestadores_info(String nomeServico, CriaPedido criaPedido) {
         flagCreated = false;
+        this.criaPedido = criaPedido;
         model = new DefaultListModel();
         this.nomeServico = nomeServico;
         available = AcessFile.lista_servico_prestador_nome_servico(nomeServico);
@@ -35,8 +38,12 @@ public class Prestadores_info extends javax.swing.JFrame {
             model.add(i, available.get(i).getValor() + "      -     "+available.get(i).getPrestador().getUsuario());
         }
         
+        
         initComponents();
         this.servicoNome.setText(nomeServico);
+        if(available.size() == 0) {
+            saveButton.setEnabled(false);
+        }
     }
 
     /**
@@ -66,6 +73,7 @@ public class Prestadores_info extends javax.swing.JFrame {
         servicoNome.setText("jLabel2");
 
         jList1.setModel(model);
+        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jList1);
 
         jLabel2.setText("Quantidade");
@@ -145,13 +153,18 @@ public class Prestadores_info extends javax.swing.JFrame {
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
         // TODO add your handling code here:
         //Criar um Pedido_Item
-        int index = jList1.getSelectedIndex();
-        Servico_Prestador getted = available.get(index);
-        Pedido_Item pedidoItem = new Pedido_Item();
-        pedidoItem.setItem_qtd(Integer.parseInt(qtd.getText()));
-        pedidoItem.setServico(getted);
-        flagCreated = true;
-        
+        try {
+            int index = jList1.getSelectedIndex();
+            Servico_Prestador getted = available.get(index);
+            Pedido_Item pedidoItem = new Pedido_Item();
+            pedidoItem.setItem_qtd(Integer.parseInt(qtd.getText()));
+            pedidoItem.setServico(getted);
+            criaPedido.add_on_chart(pedidoItem);
+            flagCreated = true;
+        } catch(ArrayIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(null, "Selecione um Servico para adicionar!", "Dados incompletos", JOptionPane.ERROR_MESSAGE );
+        }
+        criaPedido.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
 

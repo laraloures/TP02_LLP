@@ -550,7 +550,7 @@ public class AcessFile {
         try {
             buffWrite.write("Numero do pedido: "+pedido.getNumero_pedido());
 	    buffWrite.newLine();
-            buffWrite.write("Nome do cliente: "+pedido.getCliente().getNome());
+            buffWrite.write("Nome do cliente: "+pedido.getCliente().getUsuario());
 	    buffWrite.newLine();
             buffWrite.write("Lista de itens: ");
             buffWrite.newLine();
@@ -598,17 +598,24 @@ public class AcessFile {
                 linha = lerArq.readLine(); 
                 while (linha != null) {
                     Pedido pedido = new Pedido();
-                    if(linha.contains("Numero: ")){
+                    //System.out.println("    Leitura de linha");
+                    //System.out.println(linha);
+                    if(linha.contains("Numero do pedido: ")){
+                        //System.out.println("        Lendo numero");
                         pedido.setNumero_pedido(Integer.parseInt(linha.substring(linha.indexOf(":")+2,linha.length())));
                         linha = lerArq.readLine();
-                        if(linha.contains("Nome do Cliente: ")){
+                        //System.out.println(linha);
+                        if(linha.contains("Nome do cliente: ")){
+                          //System.out.println("      Lendo Cliente");
                           Cliente cliente = new Cliente();
                           cliente.setNome(linha.substring(linha.indexOf(":")+2,linha.length()));
                           pedido.setCliente(cliente);
                           linha = lerArq.readLine(); 
                           if(linha.contains("Lista de itens: ")){
+                            //System.out.println("        Lendo ItemList");
                             linha = lerArq.readLine();   
-                            while(!linha.startsWith("Valor :")){
+                              //System.out.println("LinhaAtual:"+linha);
+                            while(!linha.startsWith("Valor: ")){
                                 
                                 //Objetos a serem povoados para criar a lista de itens no pedido
                                 Servico_Prestador servico_Prestador = new Servico_Prestador();
@@ -619,41 +626,74 @@ public class AcessFile {
                                 int pos_start = 0;
                                 //Início ao ?? -> Nome do serviço
                                 // O jeito vai ser ler caractere a caractere, pqp
-                                String aux = null;
+                                String aux = "";
+                                boolean limit = false;
                                 for(int j=0; j<linha.length(); j++){
-                                    if(linha.charAt(j)!='?' && linha.charAt(j+1)!='?'){
-                                        aux += linha.charAt(j);
-                                    } else {
-                                        pos_start = j+2;
-                                        servico.setNome(aux);
-                                        continue;
+                                    if(!limit){
+                                        if(linha.charAt(j)=='?') {// && linha.charAt(j+1)!='?'){
+                                            //System.out.println("com ? aqui");
+                                            if(j+1 < linha.length() ) {
+                                                if(linha.charAt(j+1) != '?' ) {
+                                                    pos_start = j+1;
+                                                    servico.setNome(aux);
+                                                    limit = true;
+                                                }
+                                            }
+                                        }else {  //else novo
+                                            aux += linha.charAt(j);
+                                        }
                                     }
                                 }
-                                aux = null;
+                                limit=false;
+                                //System.out.println("[Nome do servico lido: "+aux+"]");
+                                aux = "";
                                 //Do ?? ao @@ -> valor
                                 for(int j=pos_start; j<linha.length(); j++) {
-                                    if(linha.charAt(j)!='@' && linha.charAt(j+1)!='@'){
-                                        aux += linha.charAt(j);
-                                    } else {
-                                        pos_start = j+2;
-                                        servico_Prestador.setValor(Double.parseDouble(aux));
-                                        continue;
+                                    if(!limit){
+                                        if(linha.charAt(j)=='@'){
+                                            if(j+1 < linha.length()) {
+                                                if(linha.charAt(j+1)=='@') {
+                                                    pos_start = j+2;
+                                                    
+                                                    servico_Prestador.setValor(Double.parseDouble(aux));
+                                                    limit = true;
+                                                }
+                                            }
+                                            //aux += linha.charAt(j);
+                                        } else {
+                                            aux += linha.charAt(j);
+                                        }
                                     }
                                 }
+                                //System.out.println("[Valor lido: "+(aux)+"]");
+                                aux = "";
+                                limit = false;
                                 //Do @@ ao $$ -> Qtdade
                                 for(int j=pos_start; j<linha.length(); j++) {
-                                    if(linha.charAt(j)!='$' && linha.charAt(j+1)!='$'){
-                                        aux += linha.charAt(j);
-                                    } else {
-                                        pos_start = j+2;
-                                        pedido_item.setItem_qtd(Integer.parseInt(aux));
-                                        continue;
+                                    if(!limit){
+                                        //System.out.println("{"+linha.charAt(j)+"}");
+                                        if(linha.charAt(j)=='$'){
+                                            if(j+1 < linha.length()) {
+                                                if(linha.charAt(j+1)=='$') {
+                                                    pos_start = j+2;
+                                                    //servico_Prestador..setValor(Double.parseDouble(aux));
+                                                    pedido_item.setItem_qtd(Integer.parseInt(aux));
+                                                    limit = true;
+                                                }
+                                            }
+                                            //aux += linha.charAt(j);
+                                        } else {
+                                            aux += linha.charAt(j);
+                                        }
                                     }
                                 }
+                                //System.out.println("[Qtd lida: "+(aux)+"]");
+                                aux = "";
                                 //Do $$ ao final da linha -> Prestador
                                 for(int j=pos_start; j<linha.length(); j++) {
                                     aux += linha.charAt(j);
                                 }    
+                                //System.out.println("[user prestador: "+aux+"]");
                             //Popula campos do item do pedido
                                 servico_Prestador.setServico(servico);
                                 servico_Prestador.setPrestador(new Profissional(null, aux, null, null));
@@ -662,18 +702,24 @@ public class AcessFile {
                             //Adiciona o pedido_item à lista de itens do pedido
                                 pedido.item_list.add(pedido_item);
                             //le a próxima linha
-                                linha = lerArq.readLine();   
+                                linha = lerArq.readLine(); 
+                                //System.out.println("{{"+linha+"}}");
                             }
-                            if(linha.startsWith("Valor: ")) {
+                            
+                            if(linha.contains("Valor: ")) {
+                                //System.out.println("        Lendo valor");
+                                //System.out.println(linha.substring(linha.indexOf(":")+2,linha.length()));
                                 pedido.setValor_total(Double.parseDouble(linha.substring(linha.indexOf(":")+2,linha.length())));
                                 //le a próxima linha
                                 linha = lerArq.readLine();   
-                                if(linha.startsWith("Status do Pedido: ")){
+                                if(linha.startsWith("Status do pedido: ")){
+                                    //System.out.println("        Lendo status");
                                     pedido.setPedido_status(Integer.parseInt(linha.substring(linha.indexOf(":")+2,linha.length())));
                                     //le a próxima linha
                                     linha = lerArq.readLine();
                                     if(linha.startsWith("-----")) {
                                         lista_pedidos_all.add(pedido);
+                                        //System.out.println("Pedido adicionado!");
                                     }
                                 }
                             }
