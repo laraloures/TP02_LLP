@@ -24,6 +24,11 @@ public class CriaPedido extends javax.swing.JFrame {
     ArrayList<Servico> servicoList;
     
     ArrayList<Pedido_Item> carrinho = new ArrayList();
+    Pedido pedido;
+    
+    
+    //gambiarras
+    Prestadores_info prestadores_info;
     
     /**
      * Creates new form CriaPedido
@@ -33,7 +38,7 @@ public class CriaPedido extends javax.swing.JFrame {
         servicoList = AcessFile.lista_servicos_ativos();
         int numeroPedido = AcessFile.lista_pedidos().size()+1;
         
-        Pedido pedido = new Pedido();
+        pedido = new Pedido();
         pedido.setCliente(new Cliente(null, nomeUsuario, null, null));
         pedido.setNumero_pedido(numeroPedido);
         Pedido_Item item = new Pedido_Item();
@@ -46,6 +51,13 @@ public class CriaPedido extends javax.swing.JFrame {
         initComponents();
         this.numPedido.setText(numeroPedido+"");
         this.clienteNome.setText(nomeUsuario);
+        
+        if(prestadores_info != null) {
+            if(prestadores_info.flagCreated) {
+                carrinho.add(prestadores_info.getPedido_item());
+                System.out.println("tá lá");
+            }
+        }
     }
 
     /**
@@ -102,6 +114,11 @@ public class CriaPedido extends javax.swing.JFrame {
         });
 
         jButton3.setText("Finalizar Pedido");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,14 +178,35 @@ public class CriaPedido extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Botão de detalhes do serviço (mostrar os prestadores do serviço e seus preços, recebendo o nome do serviço)
         int indice = jList1.getSelectedIndex();
-        Prestadores_info prestadores_info = new Prestadores_info(servicoList.get(indice).getNome());
+        prestadores_info = new Prestadores_info(servicoList.get(indice).getNome());
         prestadores_info.setVisible(true);
+        //prestadores_info.
+        //while(!prestadores_info.flagCreated) {
+            //Não vai fazer nada enquanto o servico não for escolhido.
+        //}
+        carrinho.add(prestadores_info.getPedido_item());
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // Botão de finalizar pedido
+        
+        //Calcula o valor
+        for(int i=0; i<carrinho.size(); i++) {
+            pedido.setValor_total(pedido.getValor_total()+(carrinho.get(i).getItem_qtd()*carrinho.get(i).getServico().getValor()));
+        }
+        /*
+        PedidoStatus = 0 -> Em aberto
+        PedidoStatus = 1 -> Finalizado
+        */
+        
+        pedido.setPedido_status(0);
+        AcessFile.cadastra_pedido(pedido);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

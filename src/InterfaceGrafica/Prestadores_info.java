@@ -21,11 +21,13 @@ public class Prestadores_info extends javax.swing.JFrame {
     Pedido_Item pedido_item = new Pedido_Item();
     private String nomeServico;
     ArrayList<Servico_Prestador> available;
+    public boolean flagCreated;
     
     /**
      * Creates new form Prestadores_info
      */
     public Prestadores_info(String nomeServico) {
+        flagCreated = false;
         model = new DefaultListModel();
         this.nomeServico = nomeServico;
         available = AcessFile.lista_servico_prestador_nome_servico(nomeServico);
@@ -137,6 +139,7 @@ public class Prestadores_info extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
@@ -147,13 +150,27 @@ public class Prestadores_info extends javax.swing.JFrame {
         Pedido_Item pedidoItem = new Pedido_Item();
         pedidoItem.setItem_qtd(Integer.parseInt(qtd.getText()));
         pedidoItem.setServico(getted);
+        flagCreated = true;
         
-        
+        this.dispose();
     }//GEN-LAST:event_saveButtonActionPerformed
 
     /**
      * @param args the command line arguments
      */
+
+    public Pedido_Item getPedido_item() {
+        return pedido_item;
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public void setPedido_item(Pedido_Item pedido_item) {
+        this.pedido_item = pedido_item;
+    }
+    
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
