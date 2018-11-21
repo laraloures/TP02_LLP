@@ -38,6 +38,7 @@ public class Menu extends javax.swing.JFrame {
             this.novo_servico.setVisible(false);
            // this.servicos_cadastrados.setVisible(false);
         }
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /**
@@ -65,6 +66,7 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         novo_servico = new javax.swing.JMenu();
         novoPedido = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -143,6 +145,9 @@ public class Menu extends javax.swing.JFrame {
         });
         jMenuBar1.add(novoPedido);
 
+        jMenu5.setText("About");
+        jMenuBar1.add(jMenu5);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -209,6 +214,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;

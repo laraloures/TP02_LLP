@@ -243,25 +243,20 @@ public class Lista extends javax.swing.JPanel {
             if(tipoLista == 's'){
                 int indice = jList1.getSelectedIndex();
                 servico_list = AcessFile.lista_servicos_all();
-                AcessFile.alterar_status_servico(servico_list.get(indice).getNome(), true);
-                //System.out.println("Alterado!");
+                if(servico_list.get(indice).isServico_ativado()) {
+                    JOptionPane.showMessageDialog(null, "Servico já habilitado!");
+                } else {
+                    AcessFile.alterar_status_servico(servico_list.get(indice).getNome(), true);
+                }
+                
                 /*
-                //Bloco abaixo é pra teste
                 model = new DefaultListModel();
                 servico_list = AcessFile.lista_servicos_all();
                 for(int i=0; i<servico_list.size(); i++) {
                     model.add(i, servico_list.get(i).getNome());
                 }
+                jList1.setModel(model);
                 */
-                for(int i = 0; i < jList1.getModel().getSize(); i++) {
-                    if(i == indice) {
-                        //texto = jList1.getSelectedValue().contains("Habilitado") ? jList1.getSelectedValue().replace("Habilitado", "Desabilitado") : jList1.getSelectedValue().replace("Desabilitado", "Habilitado");
-                    } else {
-                        //modelo.addElement(jList1.getModel().getElementAt(i));
-                    }
-                }
-                //jList1.setModel(modelo);
-                // salvar a nova jList no arquivo
             }
         }
     }//GEN-LAST:event_button_habilitarActionPerformed
@@ -270,8 +265,8 @@ public class Lista extends javax.swing.JPanel {
         button_habilitar.setEnabled(jList1.getSelectedIndex() != -1);
         if(tipoUsuario == 'a'){
             if(tipoLista == 's'){
-                String texto = jList1.getSelectedValue().contains("Habilitado") ? "Desabilitar" : "Habilitar";
-                button_habilitar.setText(texto);
+                //String texto = jList1.getSelectedValue().contains("Habilitado") ? "Desabilitar" : "Habilitar";
+                //button_habilitar.setText(texto);
             }
         }
     }//GEN-LAST:event_jList1ValueChanged
