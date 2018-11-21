@@ -90,6 +90,7 @@ public class CriaPedido extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Número do pedido");
 
@@ -198,6 +199,8 @@ public class CriaPedido extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        VerPedido verPedido = new VerPedido(pedido, "Pedido aberto");
+        verPedido.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -215,6 +218,7 @@ public class CriaPedido extends javax.swing.JFrame {
         
         pedido.setPedido_status(0);
         AcessFile.cadastra_pedido(pedido);
+        AcessFile.add_trabalho(pedido);
         this.jButton3.setEnabled(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 

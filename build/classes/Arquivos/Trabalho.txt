@@ -1,0 +1,10 @@
+Numero do pedido: 6
+Prestador: oporra
+Servico: fuck
+Status: 0
+---------
+Numero do pedido: 6
+Prestador: oporra
+Servico: ddddddddd
+Status: 0
+---------

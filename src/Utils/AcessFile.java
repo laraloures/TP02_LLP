@@ -90,8 +90,8 @@ public class AcessFile {
         }
     }
     
-    public static void limpa_arquivo() {
-        String path = "src\\Arquivos\\Servico.txt";
+    public static void limpa_arquivo(String nomeArquivo) {
+        String path = "src\\Arquivos\\"+nomeArquivo+".txt";
         File arquivo = new File(path);
         if(!arquivo.exists()){
             try {
@@ -319,7 +319,7 @@ public class AcessFile {
           servico_list.get(i).setServico_ativado(status);
         }
       }
-      limpa_arquivo();
+      limpa_arquivo("Servico");
       for(int j=0; j<servico_list.size(); j++) {
         cadastro_servico(servico_list.get(j).getNome(), servico_list.get(j).getDescricao(), servico_list.get(j).isServico_ativado());
       }
@@ -334,7 +334,7 @@ public class AcessFile {
           servico_list_new.add(servico_list.get(i));
         }
       }
-      limpa_arquivo();
+      limpa_arquivo("Servico");
       for(int i=0; i<servico_list.size(); i++) {
         cadastro_servico(servico_list.get(i).getNome(), servico_list.get(i).getDescricao(), servico_list.get(i).isServico_ativado());
       }
@@ -750,7 +750,91 @@ public class AcessFile {
         return lista_pedidos_all;
     }
     
+    public static Pedido lista_pedido_numero(int numeroPedido) {
+        ArrayList<Pedido> pedidos_list = AcessFile.lista_pedidos();
+        for(int i=0; i<pedidos_list.size(); i++) {
+            if(pedidos_list.get(i).getNumero_pedido() == numeroPedido) {
+                return pedidos_list.get(i);
+            }
+        }
+        return null;
+    }
+    
+    public static void alterar_pedido(Pedido pedido){
+        ArrayList<Pedido> pedidos_list = AcessFile.lista_pedidos();
+        ArrayList<Pedido> new_pedidos_list = new ArrayList();
+        limpa_arquivo("Pedido");
+        for(int i=0; i<pedidos_list.size(); i++) {
+            if(pedidos_list.get(i).getNumero_pedido() != pedido.getNumero_pedido()) {
+                cadastra_pedido(pedidos_list.get(i));
+            } else{
+                cadastra_pedido(pedido);
+            }
+        }
+    }
     //public static Pedido procuraPedidoNumero(int numeroPedido) {}
+
+    public static void add_trabalho(Pedido pedido) {
+        String path = "src\\Arquivos\\Trabalho.txt";
+        File arquivo = new File(path);
+        if(!arquivo.exists()){
+            try {
+                arquivo.createNewFile();
+            } catch (IOException ex) {
+                JOptionPane.showConfirmDialog(null,
+                "Erro ao criar o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+            }
+        }
+        BufferedWriter buffWrite= null;
+        try {
+            buffWrite = new BufferedWriter(new FileWriter(arquivo, true));
+            
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        try {
+            for(int i = 0; i < pedido.getItem_list().size(); i++) {
+                buffWrite.write("Numero do pedido: "+pedido.getNumero_pedido());
+                buffWrite.newLine();
+                buffWrite.write("Prestador: "+pedido.getItem_list().get(i).getServico().getPrestador().getUsuario());
+                buffWrite.newLine();
+                buffWrite.write("Servico: "+pedido.getItem_list().get(i).getServico().getServico().getNome());
+                buffWrite.newLine();
+                buffWrite.write("Quantidade: "+pedido.getItem_list().get(i).getItem_qtd());
+                buffWrite.newLine();
+                buffWrite.write("Status: "+pedido.getItem_list().get(i).getStatus());
+                buffWrite.newLine();
+                buffWrite.write("---------"); 
+                buffWrite.newLine();
+            }
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao escrever o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        try {
+            buffWrite.close();
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao fechar o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
 }
 
     

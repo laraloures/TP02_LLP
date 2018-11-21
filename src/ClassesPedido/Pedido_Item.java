@@ -13,6 +13,7 @@ public class Pedido_Item {
     
         private int item_qtd;
         private Servico_Prestador servico;
+        private int status;
 
         public Pedido_Item(int item_qtd, Servico_Prestador servico) {
             this.item_qtd = item_qtd;
@@ -35,6 +36,15 @@ public class Pedido_Item {
         public void setServico(Servico_Prestador servico) {
             this.servico = servico;
         }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+        
         
         
     
