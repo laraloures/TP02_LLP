@@ -308,6 +308,25 @@ public class Lista extends javax.swing.JPanel {
             Mudar o status do Pedido se todos os serviços estiverem prontos
         
         */
+        //Passo 0: Pegar o Serviço que eu quero nessa interface
+        try{
+            int index = jList1.getSelectedIndex();
+            trabalho_list.get(index).setStatusServico(1);
+            
+            //Passo 1: Mudar o status do Serviço na classe Serviço
+            AcessFile.altera_status_trabalho(trabalho_list.get(index));
+            
+            //Passo 2: Mudar o status do serviço na classe de pedidos (dentro do objeto de serviço)
+            AcessFile.altera_status_trabalho_pedido(trabalho_list.get(index));
+            
+            //Passo 3: Mudar o status do Pedido se todos os serviços estiverem prontos
+            AcessFile.altera_status_pedido(trabalho_list.get(index).getNumeroPedido());
+            
+            
+        } catch(ArrayIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(null, "Selecione um Servico para adicionar!", "Dados incompletos", JOptionPane.ERROR_MESSAGE );
+        }
+        
     }//GEN-LAST:event_button_Servico_FeitoActionPerformed
 
 

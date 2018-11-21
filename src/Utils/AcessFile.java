@@ -848,6 +848,67 @@ public class AcessFile {
         }
     }
     
+    public static void add_single_trabalho(Trabalho trabalho) {
+        String path = "src\\Arquivos\\Trabalho.txt";
+        File arquivo = new File(path);
+        if(!arquivo.exists()){
+            try {
+                arquivo.createNewFile();
+            } catch (IOException ex) {
+                JOptionPane.showConfirmDialog(null,
+                "Erro ao criar o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+            }
+        }
+        BufferedWriter buffWrite= null;
+        try {
+            buffWrite = new BufferedWriter(new FileWriter(arquivo, true));
+            
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        try {
+                buffWrite.write("Numero do pedido: "+trabalho.getNumeroPedido());
+                buffWrite.newLine();
+                buffWrite.write("Prestador: "+trabalho.getPrestador());
+                buffWrite.newLine();
+                buffWrite.write("Servico: "+trabalho.getNomeServico());
+                buffWrite.newLine();
+                buffWrite.write("Quantidade: "+trabalho.getQtd());
+                buffWrite.newLine();
+                buffWrite.write("Status: "+trabalho.getStatusServico());
+                buffWrite.newLine();
+                buffWrite.write("---------"); 
+                buffWrite.newLine();
+            
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao escrever o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        try {
+            buffWrite.close();
+        } catch (IOException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao fechar o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
     public static ArrayList<Trabalho> lista_trabalho_all() {
         ArrayList<Trabalho> trabalho_list = new ArrayList();
         Trabalho trabalho;
@@ -929,6 +990,49 @@ public class AcessFile {
             }
         }
         return trabalhoAbertoPrestador;
+    }
+    
+    public static void altera_status_trabalho(Trabalho trabalho) {
+        ArrayList<Trabalho> trabalho_list = lista_trabalho_all();
+        limpa_arquivo("Trabalho");
+        for(int i=0; i<trabalho_list.size(); i++) {
+            if(trabalho_list.get(i).getNomeServico().equals(trabalho.getNomeServico()) && trabalho_list.get(i).getNumeroPedido()==trabalho.getNumeroPedido() && trabalho_list.get(i).getPrestador().equals(trabalho.getPrestador())){
+                add_single_trabalho(trabalho);
+            } else {
+                add_single_trabalho(trabalho_list.get(i));
+            }
+        }
+    }
+
+    public static void altera_status_trabalho_pedido(Trabalho trabalho) {
+        Pedido pedido = lista_pedido_numero(trabalho.getNumeroPedido());
+        for(int i=0; i<pedido.getItem_list().size(); i++) {
+            if(pedido.getItem_list().get(i).getServico().getServico().getNome().equals(trabalho.getNomeServico()))
+                System.out.println("a");
+                if(pedido.getItem_list().get(i).getServico().getPrestador().getUsuario().equals(trabalho.getPrestador()))
+                    System.out.println("b");
+                    if(pedido.getItem_list().get(i).getStatus() == 0) {
+                        System.out.println("c");
+                        pedido.getItem_list().get(i).setStatus(trabalho.getStatusServico());
+                     
+                        
+                    }
+        }
+        alterar_pedido(pedido);
+    }
+
+    public static void altera_status_pedido(int numeroPedido) {
+        Pedido pedido = lista_pedido_numero(numeroPedido);
+        boolean flag_pronto = true;
+        for(int i=0; i<pedido.getItem_list().size(); i++) {
+            if(pedido.getItem_list().get(i).getStatus() == 0)
+                flag_pronto = false;
+        }
+        if(flag_pronto){
+            pedido.setPedido_status(1);
+            alterar_pedido(pedido);
+        }
+        
     }
 }
 
