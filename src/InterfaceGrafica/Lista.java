@@ -289,7 +289,7 @@ public class Lista extends javax.swing.JPanel {
             VerPedido verPedido = new VerPedido(pedido_list.get(index), "Pedido fechado");
             verPedido.setVisible(true);
         } catch(ArrayIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(null, "Selecione um Servico para adicionar!", "Dados incompletos", JOptionPane.ERROR_MESSAGE );
+            JOptionPane.showMessageDialog(null, "Selecione um Pedido para Visualizar!", "Dados incompletos", JOptionPane.ERROR_MESSAGE );
         }
     }//GEN-LAST:event_verPedidoActionPerformed
 
