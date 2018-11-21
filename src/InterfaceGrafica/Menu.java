@@ -29,13 +29,16 @@ public class Menu extends javax.swing.JFrame {
         this.pack();
         
         //Habilita o botão de Cadastrar Novo serviço somente se o usuário for um admin ou prestador.
+        //System.out.println("tipo usuario = ["+tipoUsuario+"]");
         if(this.tipoUsuario == 'a' || this.tipoUsuario == 'p'){
+            //Habilita o botão de novo pedido somente se o usuário for cliente
+            this.novoPedido.setVisible(false);
             this.novo_servico.setVisible(true);
-            if(this.tipoUsuario == 'p') {
-               // this.servicos_cadastrados.setVisible(true);
-            }
-        } else {
+            
+        } 
+        if(this.tipoUsuario == 'c') {
             this.novo_servico.setVisible(false);
+            this.novoPedido.setVisible(true);
            // this.servicos_cadastrados.setVisible(false);
         }
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
