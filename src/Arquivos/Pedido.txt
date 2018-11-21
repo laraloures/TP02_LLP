@@ -70,8 +70,23 @@ Status do pedido: 1
 Numero do pedido: 10
 Nome do cliente: a
 Lista de itens: 
-fuck??20.0@@5$$oporra##0
-teste2??25.2@@2$$oporra##0
+fuck??20.0@@5$$oporra##1
+teste2??25.2@@2$$oporra##1
 Valor: 300.8
+Status do pedido: 1
+---------
+Numero do pedido: 11
+Nome do cliente: a
+Lista de itens: 
+fuck??20.0@@2$$oporra##1
+teste2??25.2@@3$$oporra##1
+Valor: 115.6
+Status do pedido: 1
+---------
+Numero do pedido: 12
+Nome do cliente: a
+Lista de itens: 
+teste2??25.2@@2$$oporra##0
+Valor: 100.8
 Status do pedido: 0
 ---------

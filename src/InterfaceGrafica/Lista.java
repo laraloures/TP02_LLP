@@ -324,6 +324,12 @@ public class Lista extends javax.swing.JPanel {
             AcessFile.altera_status_pedido(trabalho_list.get(index).getNumeroPedido());
             
             //Passo 4: Tirar o último serviço finalizado dessa lista
+            model = new DefaultListModel();
+            trabalho_list = AcessFile.lista_trabalho_aberto_prestador(nomeUsuario);
+            for(int i=0; i<trabalho_list.size(); i++) {
+                model.add(i, trabalho_list.get(i).getNomeServico() + " | x"+trabalho_list.get(i).getQtd() +" | "+trabalho_list.get(i).getNumeroPedido());
+            }
+            jList1.setModel(model);
             
         } catch(ArrayIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(null, "Selecione um Servico para adicionar!", "Dados incompletos", JOptionPane.ERROR_MESSAGE );
