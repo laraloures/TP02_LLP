@@ -90,3 +90,10 @@ teste2??25.2@@2$$oporra##0
 Valor: 100.8
 Status do pedido: 0
 ---------
+Numero do pedido: 13
+Nome do cliente: a
+Lista de itens: 
+fuck??20.0@@3$$oporra##0
+Valor: 120.0
+Status do pedido: 0
+---------
