@@ -13,11 +13,13 @@ import java.awt.Color;
  * @author Nelore
  */
 public class Cadastro_Servico extends javax.swing.JFrame {
-
+    
+    private Menu menuFrame;
     /**
      * Creates new form Cadastro_Servico
      */
-    public Cadastro_Servico() {
+    public Cadastro_Servico(Menu menuFrame) {
+        this.menuFrame = menuFrame;
         initComponents();
     }
 
@@ -114,6 +116,8 @@ public class Cadastro_Servico extends javax.swing.JFrame {
         } else {
             Servico servico = new Servico(servico_nome.getText(), servico_descricao.getText(), false);
             servico.cadastro_servico(servico_nome.getText(), servico_descricao.getText(), false);
+            menuFrame.updateServicoList();
+            menuFrame.setVisible(true);
             this.dispose();
         }
     }//GEN-LAST:event_servico_cadastroActionPerformed

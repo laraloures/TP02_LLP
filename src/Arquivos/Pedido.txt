@@ -97,3 +97,24 @@ fuck??20.0@@3$$oporra##0
 Valor: 120.0
 Status do pedido: 0
 ---------
+Numero do pedido: 14
+Nome do cliente: a
+Lista de itens: 
+fuck??20.0@@5$$oporra##0
+Valor: 100.0
+Status do pedido: 0
+---------
+Numero do pedido: 15
+Nome do cliente: a
+Lista de itens: 
+fuck??20.0@@1$$oporra##0
+Valor: 20.0
+Status do pedido: 0
+---------
+Numero do pedido: 16
+Nome do cliente: a
+Lista de itens: 
+fuck??20.0@@6$$oporra##0
+Valor: 120.0
+Status do pedido: 0
+---------

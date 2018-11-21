@@ -332,6 +332,30 @@ public class Lista extends javax.swing.JPanel {
         
     }//GEN-LAST:event_button_Servico_FeitoActionPerformed
 
+    public char getTipoLista() {
+        return tipoLista;
+    }
+
+    public void setTipoLista(char tipoLista) {
+        this.tipoLista = tipoLista;
+    }
+
+    public char getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(char tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
+
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_Servico_Feito;

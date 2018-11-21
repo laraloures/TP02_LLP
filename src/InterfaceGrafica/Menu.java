@@ -149,6 +149,11 @@ public class Menu extends javax.swing.JFrame {
         jMenuBar1.add(novoPedido);
 
         jMenu5.setText("About");
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -178,6 +183,9 @@ public class Menu extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         this.jPanel1.remove(servico);
+        this.jPanel1.remove(pedido);
+        Lista newPedido = new Lista(pedido.getTipoLista(), pedido.getTipoUsuario(), pedido.getNomeUsuario());
+        pedido = newPedido;
         this.jPanel1.add(pedido);
         jPanel1.updateUI();
         this.validate();
@@ -185,6 +193,9 @@ public class Menu extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         this.jPanel1.remove(pedido);
+        this.jPanel1.remove(servico);
+        Lista newServico = new Lista(servico.getTipoLista(), servico.getTipoUsuario(), servico.getNomeUsuario());
+        servico = newServico;
         this.jPanel1.add(servico);
         jPanel1.updateUI();
         this.validate();
@@ -201,7 +212,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void novo_servicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_novo_servicoMouseClicked
          //Abrir uma nova janela para cadastro de Novo serviço
-        Cadastro_Servico cadastro_servico = new Cadastro_Servico();
+        Cadastro_Servico cadastro_servico = new Cadastro_Servico(this);
         cadastro_servico.setVisible(true);
     }//GEN-LAST:event_novo_servicoMouseClicked
 
@@ -211,6 +222,20 @@ public class Menu extends javax.swing.JFrame {
         criaPedido.setVisible(true);
     }//GEN-LAST:event_novoPedidoMouseClicked
 
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        // TODO add your handling code here:
+        AboutScreen aboutScreen = new AboutScreen();
+        aboutScreen.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_jMenu5MouseClicked
+    public void updateServicoList(){
+        this.jPanel1.remove(pedido);
+        this.jPanel1.remove(servico);
+        Lista newServico = new Lista(servico.getTipoLista(), servico.getTipoUsuario(), servico.getNomeUsuario());
+        servico = newServico;
+        this.jPanel1.add(servico);
+        jPanel1.updateUI();
+        this.validate();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
