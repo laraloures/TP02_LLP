@@ -160,6 +160,7 @@ public class Login extends javax.swing.JFrame {
                                         m.setVisible(true);
                                         this.setVisible(false);
                                         logged = true;
+                                        this.dispose();
                                     }
                                 }        
                             }
@@ -180,6 +181,7 @@ public class Login extends javax.swing.JFrame {
                                         m.setVisible(true);
                                         this.setVisible(false);
                                         logged = true;
+                                        this.dispose();
                                     }
                                 }        
                             }
@@ -200,6 +202,7 @@ public class Login extends javax.swing.JFrame {
                                         m.setVisible(true);
                                         this.setVisible(false);
                                         logged = true;
+                                        this.dispose();
                                     }
                                 }        
                             }
