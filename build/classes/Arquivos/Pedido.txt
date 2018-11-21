@@ -44,3 +44,19 @@ ddddddddd??40.0@@3$$oporra
 Valor: 140.0
 Status do pedido: 0
 ---------
+Numero do pedido: 7
+Nome do cliente: a
+Lista de itens: 
+fuck??20.0@@3333$$oporra
+ddddddddd??40.0@@56$$oporra
+Valor: 68900.0
+Status do pedido: 0
+---------
+Numero do pedido: 8
+Nome do cliente: a
+Lista de itens: 
+ddddddddd??40.0@@1$$oporra
+fuck??20.0@@3$$oporra
+Valor: 200.0
+Status do pedido: 0
+---------

@@ -9,6 +9,7 @@ import ClassesPedido.Pedido;
 import ClassesPedido.Pedido_Item;
 import ClassesPedido.Servico;
 import ClassesPedido.Servico_Prestador;
+import ClassesPedido.Trabalho;
 import ClassesUsuario.Administrador;
 import ClassesUsuario.Cliente;
 import ClassesUsuario.Profissional;
@@ -608,7 +609,7 @@ public class AcessFile {
                         if(linha.contains("Nome do cliente: ")){
                           //System.out.println("      Lendo Cliente");
                           Cliente cliente = new Cliente();
-                          cliente.setNome(linha.substring(linha.indexOf(":")+2,linha.length()));
+                          cliente.setUsuario(linha.substring(linha.indexOf(":")+2,linha.length()));
                           pedido.setCliente(cliente);
                           linha = lerArq.readLine(); 
                           if(linha.contains("Lista de itens: ")){
@@ -760,6 +761,17 @@ public class AcessFile {
         return null;
     }
     
+    public static ArrayList<Pedido> lista_pedido_user(String userName) {
+        ArrayList<Pedido> pedidos_list = AcessFile.lista_pedidos();
+        ArrayList<Pedido> pedidos_list_filtered = new ArrayList();
+        for(int i=0; i<pedidos_list.size(); i++) {
+            if(pedidos_list.get(i).getCliente().getUsuario().equals(userName)) {
+                pedidos_list_filtered.add(pedidos_list.get(i));
+            }
+        }
+        return pedidos_list_filtered;
+    }
+    
     public static void alterar_pedido(Pedido pedido){
         ArrayList<Pedido> pedidos_list = AcessFile.lista_pedidos();
         ArrayList<Pedido> new_pedidos_list = new ArrayList();
@@ -834,6 +846,89 @@ public class AcessFile {
                 JOptionPane.ERROR_MESSAGE
             );
         }
+    }
+    
+    public static ArrayList<Trabalho> lista_trabalho_all() {
+        ArrayList<Trabalho> trabalho_list = new ArrayList();
+        Trabalho trabalho;
+        try {    
+            FileReader arq;
+            arq = new FileReader("src\\Arquivos\\Trabalho.txt");
+            BufferedReader lerArq = new BufferedReader(arq);
+            try {
+                String linha;
+                linha = lerArq.readLine(); 
+                while (linha != null) {
+                    trabalho = new Trabalho();
+                    //System.out.println("linha:["+linha+"]");
+                    if(linha.contains("Numero do pedido: ")){
+                        trabalho.setNumeroPedido(Integer.parseInt(linha.substring(linha.indexOf(":")+2,linha.length())));
+                        linha = lerArq.readLine();
+                        if(linha.contains("Prestador: ")){
+                            trabalho.setPrestador(linha.substring(linha.indexOf(":")+2,linha.length()));
+                            linha = lerArq.readLine();
+                            if(linha.contains("Servico: ")){
+                                trabalho.setNomeServico(linha.substring(linha.indexOf(":")+2,linha.length()));
+                                linha = lerArq.readLine();
+                                if(linha.contains("Quantidade: ")){
+                                    trabalho.setQtd(Integer.parseInt(linha.substring(linha.indexOf(":")+2,linha.length())));
+                                    linha = lerArq.readLine();
+                                    if(linha.contains("Status: ")){
+                                        trabalho.setStatusServico(Integer.parseInt(linha.substring(linha.indexOf(":")+2,linha.length())));
+                                        linha = lerArq.readLine();
+                                        if(linha.contains("---")){
+                                            trabalho_list.add(trabalho);
+                                            
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    linha = lerArq.readLine();
+                }
+                return trabalho_list;
+            } catch (IOException ex) {
+                JOptionPane.showConfirmDialog(null,
+                    "Erro ao ler o arquivo. mensagem"+"\n"+ex.getMessage(),
+                    "Erro",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        
+        } catch (FileNotFoundException ex) {
+            JOptionPane.showConfirmDialog(null,
+                "Erro ao abrir o arquivo. mensagem"+"\n"+ex.getMessage(),
+                "Erro",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
+        return null;
+    }
+    
+    public static ArrayList<Trabalho> lista_trabalho_aberto() {
+        ArrayList<Trabalho> trabalhoList = lista_trabalho_all();
+        ArrayList<Trabalho> trabalhoAbertoList = new ArrayList();
+        
+        for(int i=0; i<trabalhoList.size(); i++) {
+            if(trabalhoList.get(i).getStatusServico() == 0) {
+                trabalhoAbertoList.add(trabalhoList.get(i));
+            }
+        }
+        return trabalhoAbertoList;
+    }
+    
+    public static ArrayList<Trabalho> lista_trabalho_aberto_prestador(String nomePrestador) {
+        ArrayList<Trabalho> trabalhoAbertoList = lista_trabalho_aberto();
+        ArrayList<Trabalho> trabalhoAbertoPrestador = new ArrayList();
+        for(int i=0; i<trabalhoAbertoList.size(); i++) {
+            if(trabalhoAbertoList.get(i).getPrestador().equals(nomePrestador)){
+                trabalhoAbertoPrestador.add(trabalhoAbertoList.get(i));
+            }
+        }
+        return trabalhoAbertoPrestador;
     }
 }
 

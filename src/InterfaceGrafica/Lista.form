@@ -25,6 +25,8 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="button_vincular" pref="156" max="32767" attributes="0"/>
                           <Component id="button_habilitar" max="32767" attributes="0"/>
+                          <Component id="verPedido" max="32767" attributes="0"/>
+                          <Component id="button_Servico_Feito" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -48,10 +50,14 @@
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
+                      <Component id="button_Servico_Feito" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="button_habilitar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="button_vincular" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="verPedido" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -101,6 +107,22 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_vincularActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="verPedido">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ver Pedido"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="verPedidoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="button_Servico_Feito">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Finalizar Servico"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_Servico_FeitoActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
