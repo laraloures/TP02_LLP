@@ -189,11 +189,6 @@ public class CriaPedido extends javax.swing.JFrame {
         int indice = jList1.getSelectedIndex();
         prestadores_info = new Prestadores_info(servicoList.get(indice).getNome(), this);
         prestadores_info.setVisible(true);
-        //prestadores_info.
-        //while(!prestadores_info.flagCreated) {
-            //Não vai fazer nada enquanto o servico não for escolhido.
-        //}
-        //carrinho.add(prestadores_info.getPedido_item());
         
     }//GEN-LAST:event_jButton1ActionPerformed
 

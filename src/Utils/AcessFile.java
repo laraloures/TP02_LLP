@@ -560,6 +560,7 @@ public class AcessFile {
                 buffWrite.write("??"+pedido.getItem_list().get(i).getServico().getValor());
                 buffWrite.write("@@"+pedido.getItem_list().get(i).getItem_qtd());
                 buffWrite.write("$$"+pedido.getItem_list().get(i).getServico().getPrestador().getUsuario());
+                buffWrite.write("##"+pedido.getItem_list().get(i).getStatus());
                 buffWrite.newLine();
             }
             buffWrite.write("Valor: "+ Double.toString(pedido.getValor_total())) ;
@@ -690,14 +691,44 @@ public class AcessFile {
                                 }
                                 //System.out.println("[Qtd lida: "+(aux)+"]");
                                 aux = "";
-                                //Do $$ ao final da linha -> Prestador
+                                limit = false;
+                                //Do $$ ao ## -> Prestador
+                                /*for(int j=pos_start; j<linha.length(); j++) {
+                                    aux += linha.charAt(j);
+                                } */   
+                                for(int j=pos_start; j<linha.length(); j++) {
+                                    if(!limit){
+                                        //System.out.println("{"+linha.charAt(j)+"}");
+                                        if(linha.charAt(j)=='#'){
+                                            if(j+1 < linha.length()) {
+                                                if(linha.charAt(j+1)=='#') {
+                                                    pos_start = j+2;
+                                                    //servico_Prestador..setValor(Double.parseDouble(aux));
+                                                    
+                                                    limit = true;
+                                                }
+                                            }
+                                            //aux += linha.charAt(j);
+                                        } else {
+                                            aux += linha.charAt(j);
+                                        }
+                                    }
+                                }
+                                //System.out.println("[User Prestador: "+(aux)+"]");
+                                servico_Prestador.setPrestador(new Profissional(null, aux, null, null));
+                                aux = "";
+                                limit = false;
+                                //Do ## ao Final -> Status do Trabalho
                                 for(int j=pos_start; j<linha.length(); j++) {
                                     aux += linha.charAt(j);
                                 }    
-                                //System.out.println("[user prestador: "+aux+"]");
+                                int statusConverted = Integer.parseInt(aux);
+                                //System.out.println("[Status do servico: "+aux+"]");
                             //Popula campos do item do pedido
                                 servico_Prestador.setServico(servico);
-                                servico_Prestador.setPrestador(new Profissional(null, aux, null, null));
+                                //pedido_item.setStatus(Integer.parseInt(aux));
+                                pedido_item.setStatus(statusConverted);
+                                //servico_Prestador.setPrestador(new Profissional(null, aux, null, null));
                                 pedido_item.setServico(servico_Prestador);
                                 
                             //Adiciona o pedido_item à lista de itens do pedido
@@ -1007,12 +1038,9 @@ public class AcessFile {
     public static void altera_status_trabalho_pedido(Trabalho trabalho) {
         Pedido pedido = lista_pedido_numero(trabalho.getNumeroPedido());
         for(int i=0; i<pedido.getItem_list().size(); i++) {
-            if(pedido.getItem_list().get(i).getServico().getServico().getNome().equals(trabalho.getNomeServico()))
-                System.out.println("a");
-                if(pedido.getItem_list().get(i).getServico().getPrestador().getUsuario().equals(trabalho.getPrestador()))
-                    System.out.println("b");
+            if(pedido.getItem_list().get(i).getServico().getServico().getNome().equals(trabalho.getNomeServico()))                
+                if(pedido.getItem_list().get(i).getServico().getPrestador().getUsuario().equals(trabalho.getPrestador()))                
                     if(pedido.getItem_list().get(i).getStatus() == 0) {
-                        System.out.println("c");
                         pedido.getItem_list().get(i).setStatus(trabalho.getStatusServico());
                      
                         

@@ -34,6 +34,7 @@ public class VerPedido extends javax.swing.JFrame {
         
         //another gambs
         
+        pedido.setValor_total(0);
         for(int i=0; i<pedido.getItem_list().size(); i++) {
             pedido.setValor_total(pedido.getValor_total()+(pedido.getItem_list().get(i).getItem_qtd()*pedido.getItem_list().get(i).getServico().getValor()));
             //pedido.setValor_total((pedido.getItem_list().get(i).getItem_qtd()*pedido.getItem_list().get(i).getServico().getValor()));

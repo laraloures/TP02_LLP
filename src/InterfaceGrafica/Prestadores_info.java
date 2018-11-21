@@ -163,6 +163,8 @@ public class Prestadores_info extends javax.swing.JFrame {
             flagCreated = true;
         } catch(ArrayIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(null, "Selecione um Servico para adicionar!", "Dados incompletos", JOptionPane.ERROR_MESSAGE );
+        } catch(NumberFormatException ez){
+            JOptionPane.showMessageDialog(null, "Forneca a quantidade de itens no servico!", "Dados incompletos", JOptionPane.ERROR_MESSAGE );
         }
         criaPedido.setVisible(true);
         this.dispose();

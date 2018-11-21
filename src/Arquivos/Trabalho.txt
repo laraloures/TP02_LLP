@@ -21,5 +21,23 @@ Numero do pedido: 8
 Prestador: oporra
 Servico: fuck
 Quantidade: 3
+Status: 1
+---------
+Numero do pedido: 9
+Prestador: oporra
+Servico: fuck
+Quantidade: 2
+Status: 1
+---------
+Numero do pedido: 10
+Prestador: oporra
+Servico: fuck
+Quantidade: 5
+Status: 0
+---------
+Numero do pedido: 10
+Prestador: oporra
+Servico: teste2
+Quantidade: 2
 Status: 0
 ---------
